@@ -1,0 +1,402 @@
+<section id="side-projects">
+  <h3>Side Projects</h3>
+  <p>The following are personal projects I've worked on in my own time</p>
+  <p>
+    The color code per project-type is as follows
+  </p>
+  <ul class="legend">
+    <li>
+      <h4 class="application">Application</h4>
+    </li>
+    <li>
+      <h4 class="tool">Tool</h4>
+    </li>
+    <li>
+      <h4 class="library">Library</h4>
+    </li>
+  </ul>
+
+  {#-----------------------#}
+  {# Variables for section #}
+  {#-----------------------#}
+
+  {% set what_is_it = '<h5>What is it?</h5>' | safe %}
+  {% set why = '<h5>Why create it?</h5>' | safe  %}
+  {% set details = '<h5>Details</h5>' | safe  %}
+  {% set sqlite_to_rest = '<a class="project" href="#sqlite-to-rest">sqlite to rest</a>' | safe  %}
+  {% set structured_cli = '<a class="project" href="#structured-cli">structured cli</a>' | safe  %}
+  {% set madonna_fp = '<a class="project" href="#madonna-fp">madonna fp</a>' | safe  %}
+
+  {#------------------------------#}
+  {# End of variable declarations #}
+  {#------------------------------#}
+
+  <h4>Recent Projects</h4>
+  <ul>
+    <li id="#beerkb">
+      <h4 class="application">
+        beerkb.com
+      </h4>
+      {{ gm.expander() }}
+
+      <div class="content">
+        {{ what_is_it }}
+        <p>
+          An interactive website allowing you to modify beer data stored in a {{ sqlite_to_rest }} instance.
+        </p>
+
+        {{ why }}
+        <p>
+          To showcase sqlite-to-rest and provide a solid example of what my front-end code looks like.
+        </p>
+
+        {{ details }}
+        <p>
+          This website consists of a frontend, a backend, and a sqlite-to-rest instance which persists all the beer data.
+          The reason for both a backend and sqlite-to-rest instance is that an API without key management should only
+          be called from trusted consumers.  Since beerkb is just a sample website, the backend acts as a light proxy
+          between the browser and sqlite-to-rest.  Were it a production application, it would have protections
+          such as credentials to log in and modify the beer API data or read-only access with request thresholds.
+        </p>
+      </div>
+    </li>
+
+
+    <li id="#sqlite-to-rest">
+      <h4 class="library">
+        sqlite to rest
+      </h4>
+      {{ gm.expander() }}
+
+      <div class="content">
+        {{ what_is_it }}
+        <p>
+          A library allowing you to easily create a RESTful API from an existing sqlite database.
+        </p>
+
+        {{ why }}
+        <p>
+          I wanted to learn how to build a proper web API using node.  I chose sqlite because
+          I'm not sold by the NoSql hype and it is the simplest, most mature relational database.
+        </p>
+
+        {{ details }}
+        <p>
+          This library packs a lot of functionality, but I'm most proud of its clean api.  Unlike
+          {{ gm.link("Ardobras' mysql-to-rest", 'https://github.com/Ardobras/mysql-to-rest') }}
+          I chose leave sorting up to a custom header and implemented limit/offsets using the existing
+          range header.  This allowed me to use table and view names in the path and columns in the
+          query without requiring any odd prefixes.  This in combination with following the http specs
+          as defined in the relevant RFC's results in a very intuitive API.
+        </p>
+      </div>
+    </li>
+
+
+    <li id="#structured-cli">
+      <h4 class="library">
+        structured cli
+      </h4>
+      {{ gm.expander() }}
+
+      <div class="content">
+        {{ what_is_it }}
+        <p>
+          A library allowing you to easily create a very friendly CLI.
+        </p>
+
+        {{ why }}
+        <p>
+          The popular CLI libraries out there like {{ gm.link('commander', 'https://github.com/tj/commander.js') }}
+          and {{ gm.link('yargs', 'https://github.com/yargs/yargs') }} are great and general-purpose.  However they
+          also provide functionality that shouldn't be a part of any CLI interface, and they don't handle errors or
+          formatting in a way that I prefer.  structured-cli is more limiting but enforces a clean, reliable CLI
+          experience and is simple to configure.
+        </p>
+
+        {{ details }}
+        <p>
+          By using {{ madonna_fp }}, input can be easily validated.  When things go south, the CLI tells the user exactly
+          why.  {{ gm.code('--help|-h') }} and {{ gm.code('--version|-v') }} come built-in.  The CLI requires commands
+          to be configured to keep a consistent semantic approach of {{ gm.code('<entry> <command> <arguments>') }}, where
+          arguments can be configured to be required or optional.  A usage string is generated for every command along with
+          requiring help text and descriptions per-argument.
+        </p>
+        <p>Command line interfaces built with this library are simply a pleasure to use.<p>
+      </div>
+    </li>
+
+
+    <li id="#madonna-fp">
+      <h4 class="library">
+        madonna fp
+      </h4>
+      {{ gm.expander() }}
+
+      <div class="content">
+        {{ what_is_it }}
+        <p>
+          A javascript object validator using functions as building blocks.
+        </p>
+
+        {{ why }}
+        <p>
+          I was sick of writing validation boilerplate and needed a way to validate javascript objects.  After looking
+          around, I wasn't satisfied with other approaches.  By using lodash/fp, I think my approach is the most flexible
+          and that's what allowed me to more easily build {{ structured_cli }} and {{ sqlite_to_rest }}.
+        </p>
+
+        {{ details }}
+        <p>
+          This builds from lodash/fp very heavily, exposing many of its boolean-returning functions. That alone buys me
+          the most common conditions used by javascripters such as {{ gm.code('isFinite') }} and {{ gm.code('isPlainObject') }}.
+          Not only that, but being able to effortlessly pass (not pre-configure) functions to act as validators is why I
+          use madonna-fp and not a pre-existing library.
+        </p>
+        <p>
+          That said, I am not extremely happy with the complexity and structure of this code.  It got to that point because
+          my priority was to push out the above projects, and this library was a necessary step.
+        </p>
+      </div>
+    </li>
+
+
+    <li id="#lilyvm">
+      <h4 class="tool">
+        lilyvm
+      </h4>
+      {{ gm.expander() }}
+
+      <div class="content">
+        {{ what_is_it }}
+        <p>
+          A {{ gm.link('lilypond', 'http://lilypond.org') }} version manager similar to
+          {{ gm.link('nvm', 'https://github.com/creationix/nvm') }},
+          {{ gm.link('pyenv', 'https://github.com/yyuu/pyenv') }},
+          {{ gm.link('rvm', 'https://rvm.io') }}, etc.
+        </p>
+
+        {{ why }}
+        <p>
+          Originally I set out to add functionality to {{ gm.link('lilybin', 'http://lilybin.com') }}
+          but was taken back by their lilypond version restrictions.  I am confident in bash and wanted to more fully
+          understand how version management works.  It honestly didn't end up taking me all that long - just a
+          concentrated 5 day weekend.
+        </p>
+
+        {{ details }}
+        <p>
+          This project is where I honed in on my pattern for creating CLI's (later to be used by {{ structured_cli }}).
+          The most important two commands are {{ gm.code('ls-remote') }} which lists the remote versions available
+          for install, and {{ gm.code('install') }} which installs a version into the appropriate .lilyvm directory.
+          The command {{ gm.code('use') }} then tells lilyvm which version should be present on your shell's
+          {{ gm.code('PATH') }}, removing all the complexity of managing multiple versions.
+        </p>
+      </div>
+    </li>
+  </ul>
+
+
+  <h4>Less Recent</h4>
+  <p>
+    I'm proud of the following projects, but they were written a while back and
+    are not representative of how I code today.  They were necessary stepping
+    stones however, and <em>are</em> representative of my love for development.
+  </p>
+  <ul>
+    <li id="#weather-accuracy">
+      <h4 class="application">
+        weather accuracy
+      </h4>
+      {{ gm.expander() }}
+
+      <div class="content">
+        {{ what_is_it }}
+        <p>
+          The intent was to build a weather accuracy application comparing three data sources.  The user
+          may select location, data type (forecasted high, low, and wind speed), and the date range.  The
+          application then compares each source's forecast against their actual measured data, and displays
+          graphs of the results.
+        </p>
+        <p>
+          I say intent because the one part missing is the data gathering from the three weather api's.
+          The code is in place, but in the end I just didn't have time to finalize the daily gathering of
+          data, and even if I did, I wouldn't have had time to wait the month for that data to be gathered.
+          The result is test data, but I'm happy with that because it looks and functions great.
+        </p>
+
+        {{ why }}
+        <p>
+          Graphs are cool and useful, which is why companies love them.  I also packed in a few notable dependencies
+          such as {{ gm.link('D3', 'https://d3js.org') }}, {{ gm.link('Green Sock', 'http://greensock.com/gsap') }},
+          and {{ gm.link('Angular', 'https://angularjs.org') }}.  I chose weather data due to its abundance in apis
+          and because I always wondered why so many weather sources exist.  There must be a most accurate one, right?
+        </p>
+
+        {{ details }}
+        <p>
+          If I were to rebuild this today, I would use a completely different toolset.  It made sense back then
+          because I hadn't yet had 'angular' on my resume and it was proof that I could learn it along with
+          other feature-full libraries.  The application however suffers from over-complexity as a result.
+          Today I would build the front-end using lodash, nunjucks, and d3 - forgetting Green Sock and Lazy.js.
+          Data would be persisted via sqlite, and the server would be the es6 conscious koa.
+        </p>
+      </div>
+    </li>
+    <li id="#music">
+      <h4 class="application">
+        music stuff
+      </h4>
+      {{ gm.expander() }}
+
+      <div class="content">
+        {{ what_is_it }}
+        <p>
+          This tool comes with two 'widgets'.
+          <dl>
+            <dt>
+              Diatonic Scale
+            </dt>
+            <dd>
+              From the website:
+              <q>
+                This widget lets you play around with different tonics and modes to see
+                what the resulting diatonic scale looks like.
+              </q>
+            </dd>
+            <dt>
+              MusicXML
+            </dt>
+            <dd>
+              From the website:
+              <q>
+                This widget lets you upload a MusicXML file, choose from a couple modifications,
+                and finally download the resulting file.
+              </q>
+            </dd>
+          </dl>
+        </p>
+
+        {{ why }}
+        <p>
+          All my siblings and I played a string instrument growing up with one of my brothers
+          playing upright bass for jazz band.  We were talking about analyzing music and he mentioned
+          how seeing scale degrees in a melody on the sheet music would be nice.  Doing that required
+          more than just displaying scale degrees, as is explained in the MusicXML widget's help
+          text.
+        </p>
+
+        {{ details }}
+        <p>
+          This project stands out for two reasons
+          <ol>
+            <li>
+              The server framework is Django.  Yes it's overkill but I wanted to learn it.  I chose
+              Django because it was the de facto python web framework and my initial scripts
+              to modify the musicxml were written in Python.  I wrote the initial scripts in Python
+              because I hadn't written Python before and heard good things.  I remember the learning
+              curve being simple and enjoyable.
+            </li>
+            <li>
+              The Diatonic Scale Widget utilizes the
+              {{ gm.link('web audio api', 'https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API') }},
+              which is very low level and thus equal parts confusing and cool.  I hadn't even realized a web audio api
+              existed until looking into it for this project.
+            </li>
+          </ol>
+        </p>
+      </div>
+    </li>
+    <li id="#tweet-ticker">
+      <h4 class="application">
+        tweet ticker
+      </h4>
+      {{ gm.expander() }}
+
+      <div class="content">
+        {{ what_is_it }}
+        <p>
+          A simple streaming twitter feed allowing visitors to track a subject and view an animated
+          ticking feed of results.  When any user changes the subject, all viewers are notified
+          of the change and see the new subject's feed.
+        </p>
+
+        {{ why }}
+        <p>
+          A popular node library {{ gm.link('socket.io', 'http://socket.io') }} was a large
+          part of node's hype back then, so I wanted to learn it.  I don't use Twitter, but it made more
+          sense than streaming anything else I could think of.
+        </p>
+
+        {{ details }}
+        <p>
+          This project is admittedly very simple, but that's why I am fond of it.  The UI is clean, the
+          concept and implementation are simple, and the result shows.  The most difficult part of this
+          app was getting the multi-user logic in place.  If I remember correctly, the errors were not
+          friendly when testing a twitter subject change with multiple connections.
+        </p>
+      </div>
+    </li>
+    <li id="#bfst">
+      <h4 class="tool">
+        file size tree
+      </h4>
+      {{ gm.expander() }}
+
+      <div class="content">
+        {{ what_is_it }}
+        <p>
+          A simple command line tool which generates an interactive html document with the purpose of displaying
+          javascript dependency disk sizes.  Browserify is used to create the dependency tree, but this tool is
+          not restricted to builds utilizing browserify.  Back then browserify was the go-to javascript module
+          concatenator, so the name made more sense back then.
+        </p>
+
+        {{ why }}
+        <p>
+          When learning node, I spent a lot of time understanding build processes because they are extremely
+          important when aiming for small page load times.  I remember working on a project when all of a sudden
+          my browserified javascript file, once cute and small, was megabytes in size.  I couldn't find an easy
+          way to track the offending dependency, and so created this tool.
+        </p>
+
+        {{ details }}
+        <p>
+          This project seems almost too small to post on this website - I'm leaving it here though because it is
+          again a showcase of my ability to create clean, simple UI's.  It is also an extremely useful tool,
+          and very easy to use.
+        </p>
+      </div>
+    </li>
+    <li id="#vsftpd-scripts">
+      <h4 class="tool">
+        cli ftp server
+      </h4>
+      {{ gm.expander() }}
+
+      <div class="content">
+        {{ what_is_it }}
+        <p>
+          A CLI written in bash allowing management of users and directory permissions of a vsftpd server.
+        </p>
+
+        {{ why }}
+        <p>
+          This dates back to when I first started learning linux.  I forced myself to go full command line meaning
+          I had to learn bash.  As for the ftp part, I often wonder why there exists so many file sharing
+          solutions when the proven sftp exists.  It actually makes me angry to think about.  After looking around
+          for secure ftp servers, vsftpd seemed to be the most touted due to its maturity and small code-base.
+        </p>
+
+        {{ details }}
+        <p>
+          This CLI relies heavily on a
+          {{ gm.link('set of utility bash scripts I wrote', 'https://github.com/olsonpm/sh-library') }}.
+          It's important to note bash is a terrible language to implement anything more than a quick script.  However
+          in the command line world the shell is your home and so learning how it works is important.  Shell scripting
+          is also unavoidable when seeking maximum portability.
+        </p>
+      </div>
+    </li>
+  </ul>
+</section>

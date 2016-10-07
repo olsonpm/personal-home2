@@ -1,0 +1,100 @@
+#side-projects {
+  h4 {
+    margin-bottom: $xs;
+  }
+
+  ul.legend > li + li {
+    margin-top: $xxs;
+  }
+
+  > ul:not(.legend) > li + li {
+    margin-top: $sm;
+  }
+
+  .application, .tool, .library {
+    vertical-align: top;
+    margin-top: 0;
+    margin-bottom: 0;
+    border-left-style: solid;
+    padding-top: $xxs;
+    padding-bottom: $xxs;
+    display: inline-block;
+    position: relative;
+    @include per-size('padding-left', $xxs, $md, $md, $lg, $lg);
+    @include per-size('padding-right', $xxs, ($md + $xxs), ($md + $xxs), ($lg + $xxs), ($lg + $xxs));
+    @include per-size('border-left-width', 2, 2, 3, 3, 3, 'px');
+
+    &:before {
+      content: none;
+    }
+
+    @media (min-width: $screen-xs-min) {
+      &:after {
+        position: absolute;
+        content: "";
+        top: 0;
+        right: 0;
+        width: 0;
+        height: 0;
+        border-top: ($project-height / 2) solid transparent;
+        border-bottom: ($project-height / 2) solid transparent;
+        border-right: $xxs solid $bg;
+      }
+    }
+  }
+
+  .application {
+    border-left-color: $application;
+    background-color: $application-bg;
+
+    + button {
+      svg path {
+        fill: $application;
+      }
+
+      &:hover svg path {
+        fill: fade-out($application, 0.4);
+      }
+    }
+  }
+
+  .tool {
+    border-left-color: $tool;
+    background-color: $tool-bg;
+
+    + button {
+      svg path {
+        fill: $tool;
+      }
+
+      &:hover svg path {
+        fill: fade-out($tool, 0.4);
+      }
+    }
+  }
+
+  .library {
+    border-left-color: $library;
+    background-color: $library-bg;
+
+    + button {
+      svg path {
+        fill: $library;
+      }
+
+      &:hover svg path {
+        fill: fade-out($library, 0.4);
+      }
+    }
+  }
+
+  button {
+    @include per-size('margin-left', $xs, $sm, $sm, $md, $md);
+  }
+
+  .content {
+    height: 0;
+    overflow: hidden;
+    @include per-size('margin-left', $xxs, $xxs, $xs, $xs, $xs);
+  }
+}
