@@ -19,7 +19,7 @@ const bPromise = require('bluebird')
 //------//
 
 const inDir = path.join(__dirname, '../src/client/assets/fonts/*')
-  , outDir = path.join(__dirname, '../dist/static/fonts')
+  , outDir = path.join(__dirname, '../release/static/fonts')
   , { streamToPromise } = utils
   , refresh = global.refresh
   ;

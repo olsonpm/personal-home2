@@ -14,20 +14,24 @@ const refresh = global.refresh = require('gulp-refresh');
 
 const bPromise = require('bluebird');
 
-const backend = require('../src/server')
-  , bFs = bPromise.promisifyAll(require('fs'))
+const bFs = bPromise.promisifyAll(require('fs'))
+  , chalk = require('chalk')
   , fp = require('lodash/fp')
   , gulp = require('gulp')
+  , http = require('http')
   , minimist = require('minimist')
   , ncpAsync = bPromise.promisifyAll(require('ncp'))
   , path = require('path')
+  , portfinder = require('portfinder')
+  , requireReload = require('require-reload')
   , rimrafAsync = bPromise.promisify(require('rimraf'))
-  , ssl = require('../ssl')
   , tasks = fp.reduce(
     (res, val) => fp.set(val, require('./' + val), res)
     , {}
     , ['njk', 'js', 'scss', 'fonts', 'img']
   )
+  , webpack = require('webpack')
+  , webpackConfig = require('../webpack.config')
   ;
 
 
@@ -35,9 +39,12 @@ const backend = require('../src/server')
 // Init //
 //------//
 
-const argv = minimist(process.argv.slice(2), { default: { ssl: true }})
-  , hasSsl = argv.ssl
+const argv = minimist(process.argv.slice(2))
+  , bGetPort = bPromise.promisify(portfinder.getPort)
+  , bWebpack = bPromise.promisify(webpack)
+  , highlight = chalk.green
   , isDev = !!argv.dev
+  , reload = requireReload(require)
   ;
 
 
@@ -47,14 +54,42 @@ const argv = minimist(process.argv.slice(2), { default: { ssl: true }})
 
 gulp.task('build', build)
   .task('clean', clean)
+  .task('build-release', ['build'], buildRelease)
   .task('serve', ['build'], () => {
+    const compiler = webpack(webpackConfig);
+    let requestListener;
+
+    bGetPort().then(aPort => {
+      // can't just pass requestListener since it may get hotreloaded
+      http.createServer((req, res) => requestListener(req, res))
+        .listen(aPort);
+
+      console.log('listening on port: ' + highlight(aPort));
+    });
+
     listen();
-    return backend.start()
-      .then(watchAll);
+
+    compiler.watch({}, (err, stats) => {
+      if (err || stats.hasErrors()) return;
+
+      // no errors, good to go
+      requestListener = reload('../release/index.pack').getRequestListener();
+      console.log('webpack finished building');
+      refresh.reload();
+    });
+
+    return watchAll();
   });
 
 function build() {
   return clean().then(buildAll);
+}
+
+function buildRelease() {
+  return bWebpack(webpackConfig).then(stats => {
+    if (stats.hasErrors())
+      throw new Error("Error during compile: " + JSON.stringify(stats.toJson(true), null, 2));
+  });
 }
 
 
@@ -70,7 +105,7 @@ function buildAll() {
       if (isDev) {
         return ncpAsync(
           path.join(__dirname, '../node_modules/livereload-js/dist/livereload.js')
-          , path.join(__dirname, '../dist/static/js/livereload.js')
+          , path.join(__dirname, '../release/static/js/livereload.js')
         );
       }
     });
@@ -83,21 +118,14 @@ function watchAll() {
 }
 
 function clean() {
-  return cleanDir(path.join(__dirname, '../dist'));
+  return cleanDir(path.join(__dirname, '../release'));
 }
 
 function listen() {
   let opts = {
-    basePath: path.join(__dirname, '../dist')
+    basePath: path.join(__dirname, '../release')
     , reloadPage: '/'
   };
-
-  if (hasSsl) {
-    opts = fp.assign(
-      opts
-      , ssl.get('credentials')
-    );
-  }
 
   refresh.listen(opts);
 }

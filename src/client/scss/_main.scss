@@ -56,22 +56,14 @@ h5 {
 a {
   color: $link;
   text-decoration: none;
-
-  &:hover {
-    color: $link-hover;
-  }
 }
 
-p {
+p.note {
+  font-style: italic;
+}
+
+p, dd, dt {
   @include per-size('font-size', $font-xs, $font-xs, $font-base, $font-base, $font-base);
-
-  &.note {
-    font-style: italic;
-
-    &:before {
-      content: "*"
-    }
-  }
 }
 
 ul:not(.normal-list), ol:not(.normal-list) {

@@ -10,8 +10,6 @@ const $ = require('domtastic')
   , velocity = require('velocity-animate')
   ;
 
-import _add from 'lodash/fp/add';
-
 
 //------//
 // Init //
@@ -27,7 +25,6 @@ const DELAY = 600
 //------//
 
 $('button.expander').on('click', expanderClicked);
-console.dir(_add);
 window.scrollTo = scrollTo;
 
 

@@ -26,7 +26,7 @@ const autoprefixer = require('autoprefixer')
 
 const inDir = path.join(__dirname, '../src/client/scss')
   , indexScss = path.join(inDir, 'index.scss')
-  , outDir = path.join(__dirname, '../dist/static/css')
+  , outDir = path.join(__dirname, '../release/static/css')
   , processors = [
     autoprefixer({browsers: ['last 2 versions']})
     , cssnano()

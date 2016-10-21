@@ -20,7 +20,7 @@ const bPromise = require('bluebird')
 //------//
 
 const inDir = path.join(__dirname, '../src/client/views')
-  , outDir = path.join(__dirname, '../dist/views')
+  , outDir = path.join(__dirname, '../release/views')
   , { streamToPromise } = utils
   , refresh = global.refresh
   ;
@@ -52,6 +52,7 @@ function clean() {
 }
 
 function watch() {
+  console.log('watching: ' + path.join(inDir, '**/*'));
   return streamToPromise(
     gulp.watch(path.join(inDir, '**/*'), ['njk-build'])
   );

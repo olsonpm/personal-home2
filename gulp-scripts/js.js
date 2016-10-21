@@ -23,7 +23,7 @@ const bPromise = require('bluebird')
 const argv = minimist(process.argv.slice(2))
   , inDir = path.join(__dirname, '../src/client/js')
   , isDev = !!argv.dev
-  , outDir = path.join(__dirname, '../dist/static/js')
+  , outDir = path.join(__dirname, '../release/static/js')
   , { streamToPromise } = utils
   , refresh = global.refresh
   ;
@@ -67,7 +67,7 @@ function build() {
         , plugins: []
       };
 
-      if (isDev) {
+      if (!isDev) {
         webpackOpts.plugins = webpackOpts.plugins.concat(
           new webpackAsync.optimize.UglifyJsPlugin({
             compress: true
@@ -80,7 +80,7 @@ function build() {
         webpackAsync(webpackOpts)
         , streamToPromise(
           vFs.src(path.join(inDir, '**/*.js'))
-            .pipe(vFs.dest(path.join(outDir, 'js')))
+            .pipe(vFs.dest(outDir))
             .pipe(refresh())
         )
       ]);

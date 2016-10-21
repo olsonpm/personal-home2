@@ -96,5 +96,27 @@
     height: 0;
     overflow: hidden;
     @include per-size('margin-left', $xxs, $xxs, $xs, $xs, $xs);
+
+    > a {
+      display: block;
+
+      &:first-child {
+        margin-top: $xs;
+      }
+      &:not(:first-child) {
+        margin-top: $xxs;
+      }
+    }
+  }
+
+  dd + dt {
+    @include per-size('margin-top', $xxs, $xxs, $xs, $xs, $xs);
+  }
+  dt:before {
+    content: '- ';
+  }
+  dd {
+    @include per-size('margin-top', 3, 3, 4, 4, 5, 'px');
+    @include per-size('margin-left', $xs, $xs, $xs, $sm, $sm);
   }
 }

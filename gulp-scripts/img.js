@@ -19,7 +19,7 @@ const bPromise = require('bluebird')
 //------//
 
 const inDir = path.join(__dirname, '../src/client/assets/img/*')
-  , outDir = path.join(__dirname, '../dist/static/img')
+  , outDir = path.join(__dirname, '../release/static/img')
   , { streamToPromise } = utils
   , refresh = global.refresh
   ;
