@@ -8922,7 +8922,7 @@ module.exports =
 	  , koaNunjucks = __webpack_require__(/*! koa-nunjucks-2 */ 181)
 	  , koaRouter = __webpack_require__(/*! koa-router */ 349)
 	  , koaStatic = __webpack_require__(/*! koa-static */ 354)
-	  , minimist = __webpack_require__(/*! minimist */ 363)
+	  , minimist = __webpack_require__(/*! minimist */ 364)
 	  , path = __webpack_require__(/*! path */ 52)
 	  ;
 
@@ -8933,7 +8933,7 @@ module.exports =
 
 	const app = new Koa()
 	  , argv = minimist(process.argv.slice(2))
-	  , distDir = __dirname
+	  , releaseDir = __dirname
 	  ;
 
 	let router = koaRouter()
@@ -8949,7 +8949,7 @@ module.exports =
 	  if (typeof isDev_ !== 'undefined') isDev = isDev_;
 
 	  app.use(koaCompress())
-	    .use(koaStatic(path.join(distDir, 'static')));
+	    .use(koaStatic(path.join(releaseDir, 'static')));
 
 	  if (letsEncryptStaticDir) {
 	    app.use(koaStatic(letsEncryptStaticDir, { hidden: true }));
@@ -8962,7 +8962,7 @@ module.exports =
 	          if (ctx.status === 500) {
 	            console.error(err);
 	            ctx.type = 'html';
-	            ctx.body = bFs.createReadStream(path.join(distDir, 'views/errors/500.html'));
+	            ctx.body = bFs.createReadStream(path.join(releaseDir, 'views/errors/500.html'));
 	            ctx.status = 200;
 	          } else {
 	            throw err;
@@ -8973,7 +8973,7 @@ module.exports =
 
 	  app.use(
 	    koaNunjucks({
-	      path: path.join(distDir, 'views')
+	      path: path.join(releaseDir, 'views')
 	      , nunjucksConfig: {
 	        noCache: isDev
 	        , throwOnUndefined: true
@@ -27337,7 +27337,6 @@ module.exports =
 		"_from": "any-promise@>=1.1.0 <2.0.0",
 		"_id": "any-promise@1.3.0",
 		"_inCache": true,
-		"_installable": true,
 		"_location": "/any-promise",
 		"_nodeVersion": "6.0.0",
 		"_npmOperationalInternal": {
@@ -44926,9 +44925,9 @@ module.exports =
 	          resolve(value);
 	        } else {
 	          return _promise2.default.resolve(value).then(function (value) {
-	            return step("next", value);
+	            step("next", value);
 	          }, function (err) {
-	            return step("throw", err);
+	            step("throw", err);
 	          });
 	        }
 	      }
@@ -56915,6 +56914,7 @@ module.exports =
 	  };
 
 	  var filterPath = function(entry) {
+	    if (entry.stat && entry.stat.isSymbolicLink()) return filterDir(entry);
 	    var resolvedPath = entryPath(entry);
 	    return (!hasGlob || globFilter(resolvedPath)) &&
 	      this._isntIgnored(resolvedPath, entry.stat) &&
@@ -59658,7 +59658,7 @@ module.exports =
 
 	function repeat(str, num) {
 	  if (typeof str !== 'string') {
-	    throw new TypeError('repeat-string expects a string.');
+	    throw new TypeError('expected a string');
 	  }
 
 	  // cover common, quick use cases
@@ -59669,21 +59669,23 @@ module.exports =
 	  if (cache !== str || typeof cache === 'undefined') {
 	    cache = str;
 	    res = '';
+	  } else if (res.length >= max) {
+	    return res.substr(0, max);
 	  }
 
-	  while (max > res.length && num > 0) {
+	  while (max > res.length && num > 1) {
 	    if (num & 1) {
 	      res += str;
 	    }
 
 	    num >>= 1;
-	    if (!num) break;
 	    str += str;
 	  }
 
-	  return res.substr(0, max);
+	  res += str;
+	  res = res.substr(0, max);
+	  return res;
 	}
-
 
 
 /***/ },
@@ -61038,18 +61040,18 @@ module.exports =
 
 	function posix(path) {
 		return path.charAt(0) === '/';
-	};
+	}
 
 	function win32(path) {
-		// https://github.com/joyent/node/blob/b3fcc245fb25539909ef1d5eaa01dbf92e168633/lib/path.js#L56
+		// https://github.com/nodejs/node/blob/b3fcc245fb25539909ef1d5eaa01dbf92e168633/lib/path.js#L56
 		var splitDeviceRe = /^([a-zA-Z]:|[\\\/]{2}[^\\\/]+[\\\/]+[^\\\/]+)?([\\\/])?([\s\S]*?)$/;
 		var result = splitDeviceRe.exec(path);
 		var device = result[1] || '';
-		var isUnc = !!device && device.charAt(1) !== ':';
+		var isUnc = Boolean(device && device.charAt(1) !== ':');
 
 		// UNC paths are always absolute
-		return !!result[2] || isUnc;
-	};
+		return Boolean(result[2] || isUnc);
+	}
 
 	module.exports = process.platform === 'win32' ? win32 : posix;
 	module.exports.posix = posix;
@@ -61991,25 +61993,34 @@ module.exports =
 
 	  var fs$readdir = fs.readdir
 	  fs.readdir = readdir
-	  function readdir (path, cb) {
-	    return go$readdir(path, cb)
+	  function readdir (path, options, cb) {
+	    var args = [path]
+	    if (typeof options !== 'function') {
+	      args.push(options)
+	    } else {
+	      cb = options
+	    }
+	    args.push(go$readdir$cb)
 
-	    function go$readdir () {
-	      return fs$readdir(path, function (err, files) {
-	        if (files && files.sort)
-	          files.sort();  // Backwards compatibility with graceful-fs.
+	    return go$readdir(args)
 
-	        if (err && (err.code === 'EMFILE' || err.code === 'ENFILE'))
-	          enqueue([go$readdir, [path, cb]])
-	        else {
-	          if (typeof cb === 'function')
-	            cb.apply(this, arguments)
-	          retry()
-	        }
-	      })
+	    function go$readdir$cb (err, files) {
+	      if (files && files.sort)
+	        files.sort()
+
+	      if (err && (err.code === 'EMFILE' || err.code === 'ENFILE'))
+	        enqueue([go$readdir, [args]])
+	      else {
+	        if (typeof cb === 'function')
+	          cb.apply(this, arguments)
+	        retry()
+	      }
 	    }
 	  }
 
+	  function go$readdir (args) {
+	    return fs$readdir.apply(fs, args)
+	  }
 
 	  if (process.version.substr(0, 4) === 'v0.8') {
 	    var legStreams = legacy(fs)
@@ -62181,6 +62192,14 @@ module.exports =
 	  fs.chmodSync = chmodFixSync(fs.chmodSync)
 	  fs.fchmodSync = chmodFixSync(fs.fchmodSync)
 	  fs.lchmodSync = chmodFixSync(fs.lchmodSync)
+
+	  fs.stat = statFix(fs.stat)
+	  fs.fstat = statFix(fs.fstat)
+	  fs.lstat = statFix(fs.lstat)
+
+	  fs.statSync = statFixSync(fs.statSync)
+	  fs.fstatSync = statFixSync(fs.fstatSync)
+	  fs.lstatSync = statFixSync(fs.lstatSync)
 
 	  // if lchmod/lchown do not exist, then make them no-ops
 	  if (!fs.lchmod) {
@@ -62369,6 +62388,33 @@ module.exports =
 	    } catch (er) {
 	      if (!chownErOk(er)) throw er
 	    }
+	  }
+	}
+
+
+	function statFix (orig) {
+	  if (!orig) return orig
+	  // Older versions of Node erroneously returned signed integers for
+	  // uid + gid.
+	  return function (target, cb) {
+	    return orig.call(fs, target, function (er, stats) {
+	      if (!stats) return cb.apply(this, arguments)
+	      if (stats.uid < 0) stats.uid += 0x100000000
+	      if (stats.gid < 0) stats.gid += 0x100000000
+	      if (cb) cb.apply(this, arguments)
+	    })
+	  }
+	}
+
+	function statFixSync (orig) {
+	  if (!orig) return orig
+	  // Older versions of Node erroneously returned signed integers for
+	  // uid + gid.
+	  return function (target) {
+	    var stats = orig.call(fs, target)
+	    if (stats.uid < 0) stats.uid += 0x100000000
+	    if (stats.gid < 0) stats.gid += 0x100000000
+	    return stats;
 	  }
 	}
 
@@ -66550,7 +66596,6 @@ module.exports =
 		"tif",
 		"tiff",
 		"tlz",
-		"ts",
 		"ttc",
 		"ttf",
 		"txz",
@@ -66871,7 +66916,7 @@ module.exports =
 	// * curDepth   - int, level of subdirectories traversed to where symlink is
 
 	// Returns nothing
-	FsEventsHandler.prototype._fsEventsSymlink =
+	FsEventsHandler.prototype._handleFsEventsSymlink =
 	function(linkPath, fullPath, transform, curDepth) {
 	  // don't follow the same symlink more than once
 	  if (this._symlinkPaths[fullPath]) return;
@@ -66970,7 +67015,7 @@ module.exports =
 	          var curDepth = this.options.depth === undefined ?
 	            undefined : depth(joinedPath, sysPath.resolve(wh.watchPath)) + 1;
 
-	          this._fsEventsSymlink(joinedPath, fullPath, processPath, curDepth);
+	          this._handleFsEventsSymlink(joinedPath, fullPath, processPath, curDepth);
 	        } else {
 	          emitAdd(joinedPath, entry.stat);
 	        }
@@ -68504,14 +68549,16 @@ module.exports =
 	/**
 	 * Parse a string for the raw tokens.
 	 *
-	 * @param  {string} str
+	 * @param  {string}  str
+	 * @param  {Object=} options
 	 * @return {!Array}
 	 */
-	function parse (str) {
+	function parse (str, options) {
 	  var tokens = []
 	  var key = 0
 	  var index = 0
 	  var path = ''
+	  var defaultDelimiter = options && options.delimiter || '/'
 	  var res
 
 	  while ((res = PATH_REGEXP.exec(str)) != null) {
@@ -68544,8 +68591,8 @@ module.exports =
 	    var partial = prefix != null && next != null && next !== prefix
 	    var repeat = modifier === '+' || modifier === '*'
 	    var optional = modifier === '?' || modifier === '*'
-	    var delimiter = res[2] || '/'
-	    var pattern = capture || group || (asterisk ? '.*' : '[^' + delimiter + ']+?')
+	    var delimiter = res[2] || defaultDelimiter
+	    var pattern = capture || group
 
 	    tokens.push({
 	      name: name || key++,
@@ -68555,7 +68602,7 @@ module.exports =
 	      repeat: repeat,
 	      partial: partial,
 	      asterisk: !!asterisk,
-	      pattern: escapeGroup(pattern)
+	      pattern: pattern ? escapeGroup(pattern) : (asterisk ? '.*' : '[^' + escapeString(delimiter) + ']+?')
 	    })
 	  }
 
@@ -68576,10 +68623,11 @@ module.exports =
 	 * Compile a string to a template function for the path.
 	 *
 	 * @param  {string}             str
+	 * @param  {Object=}            options
 	 * @return {!function(Object=, Object=)}
 	 */
-	function compile (str) {
-	  return tokensToFunction(parse(str))
+	function compile (str, options) {
+	  return tokensToFunction(parse(str, options))
 	}
 
 	/**
@@ -68790,27 +68838,23 @@ module.exports =
 	 * @return {!RegExp}
 	 */
 	function stringToRegexp (path, keys, options) {
-	  var tokens = parse(path)
-	  var re = tokensToRegExp(tokens, options)
-
-	  // Attach keys back to the regexp.
-	  for (var i = 0; i < tokens.length; i++) {
-	    if (typeof tokens[i] !== 'string') {
-	      keys.push(tokens[i])
-	    }
-	  }
-
-	  return attachKeys(re, keys)
+	  return tokensToRegExp(parse(path, options), keys, options)
 	}
 
 	/**
 	 * Expose a function for taking tokens and returning a RegExp.
 	 *
-	 * @param  {!Array}  tokens
-	 * @param  {Object=} options
+	 * @param  {!Array}          tokens
+	 * @param  {(Array|Object)=} keys
+	 * @param  {Object=}         options
 	 * @return {!RegExp}
 	 */
-	function tokensToRegExp (tokens, options) {
+	function tokensToRegExp (tokens, keys, options) {
+	  if (!isarray(keys)) {
+	    options = /** @type {!Object} */ (keys || options)
+	    keys = []
+	  }
+
 	  options = options || {}
 
 	  var strict = options.strict
@@ -68828,6 +68872,8 @@ module.exports =
 	    } else {
 	      var prefix = escapeString(token.prefix)
 	      var capture = '(?:' + token.pattern + ')'
+
+	      keys.push(token)
 
 	      if (token.repeat) {
 	        capture += '(?:' + prefix + capture + ')*'
@@ -68863,7 +68909,7 @@ module.exports =
 	    route += strict && endsWithSlash ? '' : '(?=\\/|$)'
 	  }
 
-	  return new RegExp('^' + route, flags(options))
+	  return attachKeys(new RegExp('^' + route, flags(options)), keys)
 	}
 
 	/**
@@ -68879,14 +68925,12 @@ module.exports =
 	 * @return {!RegExp}
 	 */
 	function pathToRegexp (path, keys, options) {
-	  keys = keys || []
-
 	  if (!isarray(keys)) {
-	    options = /** @type {!Object} */ (keys)
+	    options = /** @type {!Object} */ (keys || options)
 	    keys = []
-	  } else if (!options) {
-	    options = {}
 	  }
+
+	  options = options || {}
 
 	  if (path instanceof RegExp) {
 	    return regexpToRegexp(path, /** @type {!Array} */ (keys))
@@ -69002,7 +69046,7 @@ module.exports =
 	var resolve = path.resolve;
 	var parse = path.parse;
 	var sep = path.sep;
-	var fs = __webpack_require__(/*! mz/fs */ 360);
+	var fs = __webpack_require__(/*! mz/fs */ 361);
 	var co = __webpack_require__(/*! co */ 176);
 
 	/**
@@ -69158,7 +69202,7 @@ module.exports =
 
 	var createError = __webpack_require__(/*! http-errors */ 357)
 	var normalize = __webpack_require__(/*! path */ 52).normalize
-	var pathIsAbsolute = __webpack_require__(/*! path-is-absolute */ 315)
+	var pathIsAbsolute = __webpack_require__(/*! path-is-absolute */ 360)
 	var resolve = __webpack_require__(/*! path */ 52).resolve
 	var sep = __webpack_require__(/*! path */ 52).sep
 
@@ -69498,6 +69542,35 @@ module.exports =
 
 /***/ },
 /* 360 */
+/*!****************************************************!*\
+  !*** ./~/resolve-path/~/path-is-absolute/index.js ***!
+  \****************************************************/
+/***/ function(module, exports) {
+
+	'use strict';
+
+	function posix(path) {
+		return path.charAt(0) === '/';
+	};
+
+	function win32(path) {
+		// https://github.com/joyent/node/blob/b3fcc245fb25539909ef1d5eaa01dbf92e168633/lib/path.js#L56
+		var splitDeviceRe = /^([a-zA-Z]:|[\\\/]{2}[^\\\/]+[\\\/]+[^\\\/]+)?([\\\/])?([\s\S]*?)$/;
+		var result = splitDeviceRe.exec(path);
+		var device = result[1] || '';
+		var isUnc = !!device && device.charAt(1) !== ':';
+
+		// UNC paths are always absolute
+		return !!result[2] || isUnc;
+	};
+
+	module.exports = process.platform === 'win32' ? win32 : posix;
+	module.exports.posix = posix;
+	module.exports.win32 = win32;
+
+
+/***/ },
+/* 361 */
 /*!********************!*\
   !*** ./~/mz/fs.js ***!
   \********************/
@@ -69546,7 +69619,7 @@ module.exports =
 
 	typeof fs.access === 'function' && api.push('access')
 
-	__webpack_require__(/*! thenify-all */ 361).withCallback(fs, exports, api)
+	__webpack_require__(/*! thenify-all */ 362).withCallback(fs, exports, api)
 
 	exports.exists = function (filename, callback) {
 	  // callback
@@ -69565,14 +69638,14 @@ module.exports =
 
 
 /***/ },
-/* 361 */
+/* 362 */
 /*!********************************!*\
   !*** ./~/thenify-all/index.js ***!
   \********************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	
-	var thenify = __webpack_require__(/*! thenify */ 362)
+	var thenify = __webpack_require__(/*! thenify */ 363)
 
 	module.exports = thenifyAll
 	thenifyAll.withCallback = withCallback
@@ -69647,7 +69720,7 @@ module.exports =
 
 
 /***/ },
-/* 362 */
+/* 363 */
 /*!****************************!*\
   !*** ./~/thenify/index.js ***!
   \****************************/
@@ -69669,7 +69742,7 @@ module.exports =
 
 	function thenify($$__fn__$$) {
 	  assert(typeof $$__fn__$$ === 'function')
-	  return eval(createWrapper($$__fn__$$.name.replace(/\s|bound(?!$)/g,'')))
+	  return eval(createWrapper($$__fn__$$.name))
 	}
 
 	/**
@@ -69697,12 +69770,13 @@ module.exports =
 	}
 
 	function createWrapper(name, withCallback) {
+	  name = (name || '').replace(/\s|bound(?!$)/g, '')
 	  withCallback = withCallback ?
 	    'var lastType = typeof arguments[len - 1]\n'
 	    + 'if (lastType === "function") return $$__fn__$$.apply(self, arguments)\n'
 	   : ''
 
-	  return '(function ' + (name || '') + '() {\n'
+	  return '(function ' + name + '() {\n'
 	    + 'var self = this\n'
 	    + 'var len = arguments.length\n'
 	    + withCallback
@@ -69718,7 +69792,7 @@ module.exports =
 
 
 /***/ },
-/* 363 */
+/* 364 */
 /*!*****************************!*\
   !*** ./~/minimist/index.js ***!
   \*****************************/
