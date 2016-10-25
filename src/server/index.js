@@ -23,7 +23,7 @@ const bPromise = require('bluebird')
 
 const app = new Koa()
   , argv = minimist(process.argv.slice(2))
-  , distDir = __dirname
+  , releaseDir = __dirname
   ;
 
 let router = koaRouter()
@@ -39,7 +39,7 @@ const getApp = (letsEncryptStaticDir, isDev_) => {
   if (typeof isDev_ !== 'undefined') isDev = isDev_;
 
   app.use(koaCompress())
-    .use(koaStatic(path.join(distDir, 'static')));
+    .use(koaStatic(path.join(releaseDir, 'static')));
 
   if (letsEncryptStaticDir) {
     app.use(koaStatic(letsEncryptStaticDir, { hidden: true }));
@@ -52,7 +52,7 @@ const getApp = (letsEncryptStaticDir, isDev_) => {
           if (ctx.status === 500) {
             console.error(err);
             ctx.type = 'html';
-            ctx.body = bFs.createReadStream(path.join(distDir, 'views/errors/500.html'));
+            ctx.body = bFs.createReadStream(path.join(releaseDir, 'views/errors/500.html'));
             ctx.status = 200;
           } else {
             throw err;
@@ -63,7 +63,7 @@ const getApp = (letsEncryptStaticDir, isDev_) => {
 
   app.use(
     koaNunjucks({
-      path: path.join(distDir, 'views')
+      path: path.join(releaseDir, 'views')
       , nunjucksConfig: {
         noCache: isDev
         , throwOnUndefined: true
