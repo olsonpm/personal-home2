@@ -26983,7 +26983,8 @@ module.exports =
 	    function dispatch (i) {
 	      if (i <= index) return Promise.reject(new Error('next() called multiple times'))
 	      index = i
-	      const fn = middleware[i] || next
+	      let fn = middleware[i]
+	      if (i === middleware.length) fn = next
 	      if (!fn) return Promise.resolve()
 	      try {
 	        return Promise.resolve(fn(context, function next () {
@@ -35254,7 +35255,7 @@ module.exports =
 	var __WEBPACK_AMD_DEFINE_RESULT__;/**
 	 * @module vow
 	 * @author Filatov Dmitry <dfilatov@yandex-team.ru>
-	 * @version 0.4.12
+	 * @version 0.4.13
 	 * @license
 	 * Dual licensed under the MIT and GPL licenses:
 	 *   * http://www.opensource.org/licenses/mit-license.php
@@ -35267,7 +35268,8 @@ module.exports =
 	    nextTick = (function() {
 	        var fns = [],
 	            enqueueFn = function(fn) {
-	                return fns.push(fn) === 1;
+	                fns.push(fn);
+	                return fns.length === 1;
 	            },
 	            callFns = function() {
 	                var fnsToCall = fns, i = 0, len = fns.length;
@@ -43825,13 +43827,13 @@ module.exports =
 	  var mime = match && match[1].toLowerCase()
 	  var data = db[mime]
 
-	  if ((data && data.compressible) || compressibleTypeRegExp.test(mime)) {
-	    return true
+	  // return database information
+	  if (data && data.compressible !== undefined) {
+	    return data.compressible
 	  }
 
-	  return data
-	    ? data.compressible
-	    : undefined
+	  // fallback to regexp or unknown
+	  return compressibleTypeRegExp.test(mime) || undefined
 	}
 
 
@@ -44258,8 +44260,9 @@ module.exports =
 	  runtime = global.regeneratorRuntime = inModule ? module.exports : {};
 
 	  function wrap(innerFn, outerFn, self, tryLocsList) {
-	    // If outerFn provided, then outerFn.prototype instanceof Generator.
-	    var generator = Object.create((outerFn || Generator).prototype);
+	    // If outerFn provided and outerFn.prototype is a Generator, then outerFn.prototype instanceof Generator.
+	    var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator;
+	    var generator = Object.create(protoGenerator.prototype);
 	    var context = new Context(tryLocsList || []);
 
 	    // The ._invoke method unifies the implementations of the .next,
@@ -60245,7 +60248,7 @@ module.exports =
 	module.exports = function omit(obj, keys) {
 	  if (!isObject(obj)) return {};
 
-	  var keys = [].concat.apply([], [].slice.call(arguments, 1));
+	  keys = [].concat.apply([], [].slice.call(arguments, 1));
 	  var last = keys[keys.length - 1];
 	  var res = {}, fn;
 
@@ -60258,7 +60261,7 @@ module.exports =
 	    return obj;
 	  }
 
-	  forOwn(obj, function (value, key) {
+	  forOwn(obj, function(value, key) {
 	    if (keys.indexOf(key) === -1) {
 
 	      if (!isFunction) {
@@ -62217,15 +62220,27 @@ module.exports =
 
 	  // on Windows, A/V software can lock the directory, causing this
 	  // to fail with an EACCES or EPERM if the directory contains newly
-	  // created files.  Try again on failure, for up to 1 second.
+	  // created files.  Try again on failure, for up to 60 seconds.
+
+	  // Set the timeout this long because some Windows Anti-Virus, such as Parity
+	  // bit9, may lock files for up to a minute, causing npm package install
+	  // failures. Also, take care to yield the scheduler. Windows scheduling gives
+	  // CPU to a busy looping process, which can cause the program causing the lock
+	  // contention to be starved of CPU by node, so the contention doesn't resolve.
 	  if (process.platform === "win32") {
 	    fs.rename = (function (fs$rename) { return function (from, to, cb) {
 	      var start = Date.now()
+	      var backoff = 0;
 	      fs$rename(from, to, function CB (er) {
 	        if (er
 	            && (er.code === "EACCES" || er.code === "EPERM")
-	            && Date.now() - start < 1000) {
-	          return fs$rename(from, to, CB)
+	            && Date.now() - start < 60000) {
+	          setTimeout(function() {
+	            fs$rename(from, to, CB);
+	          }, backoff)
+	          if (backoff < 100)
+	            backoff += 10;
+	          return;
 	        }
 	        if (cb) cb(er)
 	      })
@@ -69618,6 +69633,7 @@ module.exports =
 	]
 
 	typeof fs.access === 'function' && api.push('access')
+	typeof fs.mkdtemp === 'function' && api.push('mkdtemp')
 
 	__webpack_require__(/*! thenify-all */ 362).withCallback(fs, exports, api)
 
