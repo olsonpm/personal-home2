@@ -23,10 +23,11 @@
     "cssnano": "^3.7.1",
     "domtastic": "^0.12.1",
     "es6-promise": "^4.0.5",
+    "eslint": "^5.0.0",
+    "eslint-config-personal": "github:olsonpm/eslint-config-personal",
     "gulp": "^3.9.1",
     "gulp-postcss": "^6.1.1",
     "gulp-refresh": "^1.1.0",
-    "gulp-sass": "^2.3.2",
     "gulp-sourcemaps": "^1.6.0",
     "json-loader": "^0.5.4",
     "koa": "^2.0.0",
@@ -43,6 +44,7 @@
     "ncp": "^2.0.0",
     "normalize.css": "^4.1.1",
     "portfinder": "^1.0.8",
+    "prettier": "^1.13.5",
     "promise": "^7.1.1",
     "ramda": "^0.22.1",
     "require-reload": "^0.2.2",
@@ -55,5 +57,18 @@
     "vow": "^0.4.12",
     "webpack": "^1.13.2",
     "when": "^3.7.7"
-  }
+  },
+  "dependencies": {
+    "gulp-sass": "^4.0.1",
+    "init-prettier-and-eslint": "github:olsonpm/init-prettier-and-eslint"
+  },
+  "eslintConfig": {
+    "extends": "personal"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "semi": false
+  },
+  "license": "SEE LICENSE IN license.txt"
 }

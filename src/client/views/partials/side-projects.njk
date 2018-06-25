@@ -29,6 +29,37 @@
 
   <h4>Recent Projects</h4>
   <ul>
+    <li id="passthequill">
+      <h4 class="application">
+        passthequill.com
+      </h4>
+      {{ gm.expander() }}
+
+      <div class="content">
+        {{ gm.link('See it in action', 'https://test.passthequill.com') }}
+        {{ gm.link('Github source', 'https://github.com/olsonpm/passthequill.com') }}
+        {{ what_is_it }}
+        <p>
+          A simple word game that I initially created for pen and paper a few
+          years&nbsp;ago.
+        </p>
+
+        {{ why }}
+        <p>
+          I've had this idea in the back of my mind for a while and wanted to
+          finish it.  My focus here was learning a few new technologies as well
+          as creating a friendly user experience.  I probably learned the most
+          about vue, ssr, how to configure an email server, couchdb and how to
+          organize the frontend to more easily coordinate&nbsp;animations.
+        </p>
+        <p>
+          I could go on for a while about this site - it is easily the most fun
+          and rewarding project I've spent time&nbsp;on.
+        </p>
+      </div>
+    </li>
+
+
     <li id="beerkb">
       <h4 class="application">
         beerkb.com
@@ -40,12 +71,15 @@
         {{ gm.link('Github source', 'https://github.com/olsonpm/beerkb.com') }}
         {{ what_is_it }}
         <p>
-          An interactive website allowing you to modify beer data stored in a {{ sqlite_to_rest }} instance.
+          An interactive website allowing you to modify beer data stored in a
+          {{ sqlite_to_rest }}&nbsp;instance.
         </p>
 
         {{ why }}
         <p>
-          To showcase sqlite-to-rest, present some front-end code, and learn a full-featured templating engine that can be used on both the front and back ends (nunjucks).
+          To showcase sqlite-to-rest, present some front-end code, and learn a
+          full-featured templating engine that can be used on both the front and
+          back ends&nbsp;(nunjucks).
         </p>
       </div>
     </li>
@@ -61,15 +95,18 @@
         {{ gm.link('Github source', 'https://github.com/olsonpm/nss-certutil-helpers') }}
         {{ what_is_it }}
         <p>
-          nch stands for NSS Certutil Helpers and is a friendly, narrow-focused command line wrapper to certutil.
-          Its goal is to allow for easy creation of mutual ssl authentication.
+          nch stands for NSS Certutil Helpers and is a friendly, narrow-focused
+          command line wrapper to certutil. Its goal is to allow for easy
+          creation of mutual ssl&nbsp;authentication.
         </p>
 
         {{ why }}
         <p>
-          The command line experience for both openssl and certutil are abysmal.  Granted, my CLI is extremely limited in
-          scope, but its use is intuitive.  The repo doubles as a tutorial since existing documentation on the subject
-          of mutual ssl authentication lacks clear examples.
+          The command line experience for both openssl and certutil are abysmal.
+          Granted, my CLI is extremely limited in scope, but its use is
+          intuitive.  The repo doubles as a tutorial since existing
+          documentation on the subject of mutual ssl authentication lacks
+          clear&nbsp;examples.
         </p>
       </div>
     </li>
@@ -85,14 +122,16 @@
         {{ gm.link('Github source', 'https://github.com/olsonpm/sqlite-to-rest') }}
         {{ what_is_it }}
         <p>
-          A library allowing you to easily create a RESTful API from an existing sqlite database.
+          A library allowing you to easily create a RESTful API from an existing
+          sqlite&nbsp;database.
         </p>
 
         {{ why }}
         <p>
-          I wanted to learn how to build a proper web API using node and CRUD boilerplate is not fun
-          to write.  I chose sqlite because I'm not sold by the NoSql hype and it is the simplest
-          mature relational database.
+          I wanted to learn how to build a proper web API using node and CRUD
+          boilerplate is not fun to write.  I chose sqlite because I'm not sold
+          by the NoSql hype and it is the simplest mature
+          relational&nbsp;database.
         </p>
       </div>
     </li>
@@ -108,16 +147,18 @@
         {{ gm.link('Github source', 'https://github.com/olsonpm/structured-cli') }}
         {{ what_is_it }}
         <p>
-          A library allowing you to easily create a very friendly CLI.
+          A library allowing you to easily create a very friendly&nbsp;CLI.
         </p>
 
         {{ why }}
         <p>
           The popular CLI libraries out there like {{ gm.link('commander', 'https://github.com/tj/commander.js') }}
-          and {{ gm.link('yargs', 'https://github.com/yargs/yargs') }} are great and general-purpose.  However they
-          also provide functionality that shouldn't be a part of any CLI and they don't handle errors or
-          formatting in a way that I prefer.  structured-cli is more limiting but enforces a clean, reliable CLI
-          experience and is simple to configure.
+          and {{ gm.link('yargs', 'https://github.com/yargs/yargs') }} are great
+          and general-purpose.  However they also provide functionality that
+          shouldn't be a part of any CLI and they don't handle errors or
+          formatting in a way that I prefer.  structured-cli is more limiting
+          but enforces a clean, reliable CLI experience and is simple
+          to&nbsp;configure.
         </p>
       </div>
     </li>
@@ -133,14 +174,16 @@
         {{ gm.link('Github source', 'https://github.com/olsonpm/madonna-fp') }}
         {{ what_is_it }}
         <p>
-          A javascript object validator using functions as building blocks.
+          A javascript object validator using functions as building&nbsp;blocks.
         </p>
 
         {{ why }}
         <p>
-          I was sick of writing validation boilerplate and needed a way to validate javascript objects.  After looking
-          around, I wasn't satisfied with other approaches.  By using lodash/fp, I think my approach is very flexible
-          in comparison and allowed me to more easily build {{ structured_cli }} and {{ sqlite_to_rest }}.
+          I was sick of writing validation boilerplate and needed a way to
+          validate javascript objects.  After looking around, I wasn't satisfied
+          with other approaches.  By using lodash/fp, I think my approach is
+          very flexible in comparison and allowed me to more easily build
+          {{ structured_cli }} and {{ sqlite_to_rest }}.
         </p>
       </div>
     </li>
@@ -156,17 +199,19 @@
         {{ gm.link('Github source', 'https://github.com/olsonpm/lilyvm') }}
         {{ what_is_it }}
         <p>
-          A {{ gm.link('lilypond', 'http://lilypond.org') }} version manager similar to
+          A {{ gm.link('lilypond', 'http://lilypond.org') }} version manager
+          similar to
           {{ gm.link('nvm', 'https://github.com/creationix/nvm') }},
           {{ gm.link('pyenv', 'https://github.com/yyuu/pyenv') }},
-          {{ gm.link('rvm', 'https://rvm.io') }}, etc.
+          {{ gm.link('rvm', 'https://rvm.io') }},&nbsp;etc.
         </p>
 
         {{ why }}
         <p>
-          Originally I set out to add functionality to {{ gm.link('lilybin', 'http://lilybin.com') }}
-          but was taken back by their lilypond version restrictions.  I am confident in bash and wanted to more fully
-          understand how version management works.
+          Originally I set out to add functionality to
+          {{ gm.link('lilybin', 'http://lilybin.com') }} but was taken back by
+          their lilypond version restrictions.  I am confident in bash and
+          wanted to more fully understand how version management&nbsp;works.
         </p>
       </div>
     </li>
@@ -176,7 +221,7 @@
   <h4>Less Recent</h4>
   <p>
     I'm proud of the following projects, but they were written a while back and
-    are not representative of how I code today.
+    are not representative of how I code&nbsp;today.
   </p>
   <ul>
     <li id="weather-accuracy">
@@ -190,22 +235,26 @@
         {{ gm.link('Github source', 'https://github.com/olsonpm/weather-accuracy') }}
         {{ what_is_it }}
         <p>
-          The intent was to build a weather accuracy application comparing three data sources.  The user
-          may select location, data type (forecasted high, low, and wind speed), and the date range.  The
-          application then compares each source's forecast against their actual measured data, and displays
-          graphs of the results.
+          The intent was to build a weather accuracy application comparing three
+          data sources.  The user may select location, data type (forecasted
+          high, low, and wind speed), and the date range.  The application then
+          compares each source's forecast against their actual measured data,
+          and displays graphs of the&nbsp;results.
         </p>
         <p>
-          I say intent because the one part missing is the data gathering from the three weather api's.
-          The code is in place, but in the end I just didn't have time to finalize the daily gathering of
-          data because that would have required another month for the data to be gathered. The result is
-          test data, but I'm happy with that because it looks and functions great.
+          I say intent because the one part missing is the data gathering from
+          the three weather api's. The code is in place, but in the end I just
+          didn't have time to finalize the daily gathering of data because that
+          would have required another month for the data to be gathered. The
+          result is test data, but I'm happy with that because it looks and
+          functions&nbsp;great.
         </p>
 
         {{ why }}
         <p>
-          Graphs are cool and useful and I hadn't yet tackled their creation.  Learning {{ gm.link('D3', 'https://d3js.org') }}
-          was well worth the time investment.  This was also my project to learn angular.
+          Graphs are cool and useful and I hadn't yet tackled their creation.
+          Learning {{ gm.link('D3', 'https://d3js.org') }} was well worth the
+          time investment.  This was also my project to learn&nbsp;angular.
         </p>
       </div>
     </li>
@@ -226,23 +275,27 @@
               Diatonic Scale
             </dt>
             <dd>
-              Allows you play around with different tonics and modes to see what the resulting diatonic scale looks like.
+              Allows you play around with different tonics and modes to see what
+              the resulting diatonic scale looks&nbsp;like.
             </dd>
             <dt>
               MusicXML
             </dt>
             <dd>
-              Lets you upload a MusicXML file, choose from a couple modifications and download the resulting file.
+              Lets you upload a MusicXML file, choose from a couple
+              modifications and download the resulting&nbsp;file.
             </dd>
           </dl>
         </p>
 
         {{ why }}
         <p>
-          All my siblings and I played a string instrument growing up.  One of my brothers and I were
-          talking about analyzing music when he mentioned how seeing scale degrees on the sheet music
-          would be nice.  Learning python and the {{ gm.link('web audio api', 'https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API') }}
-          made for a fun project.
+          All my siblings and I played a string instrument growing up.  One of
+          my brothers and I were talking about analyzing music when he mentioned
+          how seeing scale degrees on the sheet music would be nice.  Learning
+          python and the
+          {{ gm.link('web audio api', 'https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API') }}
+          made for a fun&nbsp;project.
         </p>
       </div>
     </li>
@@ -257,16 +310,18 @@
         {{ gm.link('Github source', 'https://github.com/olsonpm/tweet-ticker') }}
         {{ what_is_it }}
         <p>
-          A simple streaming twitter feed allowing visitors to track a subject and view an animated
-          ticking feed of results.  When any user changes the subject, all viewers are notified
-          of the change and see the new subject's feed.
+          A simple streaming twitter feed allowing visitors to track a subject
+          and view an animated ticking feed of results.  When any user changes
+          the subject, all viewers are notified of the change and see the new
+          subject's&nbsp;feed.
         </p>
 
         {{ why }}
         <p>
-          A popular node library {{ gm.link('socket.io', 'http://socket.io') }} was a large
-          part of node's hype back then, so I wanted to learn it.  I don't use Twitter, but it made more
-          sense than streaming anything else I could think of.
+          A popular node library {{ gm.link('socket.io', 'http://socket.io') }}
+          was a large part of node's hype back then, so I wanted to learn it.  I
+          don't use Twitter, but it made more sense than streaming anything else
+          I could think&nbsp;of.
         </p>
       </div>
     </li>
@@ -280,17 +335,20 @@
         {{ gm.link('Github source', 'https://github.com/olsonpm/browserify-file-size-tree') }}
         {{ what_is_it }}
         <p>
-          A simple command line tool which generates an interactive html document for the purpose of displaying
-          javascript dependency disk sizes.  Browserify is used to create the dependency tree, but this tool is
-          not restricted to builds utilizing browserify.
+          A simple command line tool which generates an interactive html
+          document for the purpose of displaying javascript dependency disk
+          sizes.  Browserify is used to create the dependency tree, but this
+          tool is not restricted to builds utilizing&nbsp;browserify.
         </p>
 
         {{ why }}
         <p>
-          When learning node, I spent a lot of time understanding build processes because they are extremely
-          important when aiming for small page load times.  I remember working on a project when all of a sudden
-          my browserified javascript file, once cute and small, was megabytes in size.  I couldn't find an easy
-          way to track the offending dependency and so created this tool.
+          When learning node, I spent a lot of time understanding build
+          processes because they are extremely important when aiming for small
+          page load times.  I remember working on a project when all of a sudden
+          my browserified javascript file, once cute and small, was megabytes in
+          size.  I couldn't find an easy way to track the offending dependency
+          and so created this&nbsp;tool.
         </p>
       </div>
     </li>
@@ -304,18 +362,20 @@
         {{ gm.link('Github source', 'https://github.com/olsonpm/vsftpd-scripts') }}
         {{ what_is_it }}
         <p>
-          A CLI written in bash allowing management of users and directory permissions of a vsftpd server.
+          A CLI written in bash allowing management of users and directory
+          permissions of a vsftpd&nbsp;server.
         </p>
 
         {{ why }}
         <p>
-          This dates back to when I first started learning linux.  I forced myself to go full command line meaning
-          I had to learn the shell.  As for the ftp part, I wanted my own sftp server and vsftpd seemed to be
-          the most touted due to its maturity and small code-base.
+          This dates back to when I first started learning linux.  I forced
+          myself to go full command line meaning I had to learn the shell.  As
+          for the ftp part, I wanted my own sftp server and vsftpd seemed to be
+          the most touted due to its maturity and small&nbsp;code-base.
         </p>
 
         <p class="note">
-          This tool makes heavy use of {{ gm.link('these helper shell scripts', 'https://github.com/olsonpm/sh-library') }}
+          This tool makes heavy use of&nbsp;{{ gm.link('these helper shell scripts', 'https://github.com/olsonpm/sh-library') }}
         </p>
       </div>
     </li>
