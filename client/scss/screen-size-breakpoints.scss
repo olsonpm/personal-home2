@@ -1,0 +1,13 @@
+@import './variables';
+
+:export {
+  xsMin: $screen-xs-min;
+  smMin: $screen-sm-min;
+  mdMin: $screen-md-min;
+  lgMin: $screen-lg-min;
+
+  xxsMax: $screen-xxs-max;
+  xsMax: $screen-xs-max;
+  smMax: $screen-sm-max;
+  mdMax: $screen-md-max;
+}

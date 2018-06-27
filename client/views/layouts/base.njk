@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Phil Olson</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <link rel="icon" type="image/png" href="/images/favicon.16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/images/favicon.32.png" sizes="32x32">
+
+    {% for cssAsset in nunjucksWebpackPlugin.css -%}
+    <link rel="stylesheet" type="text/css" href="{{ cssAsset }}">
+    {%- endfor %}
+  </head>
+
+  <body>
+    {%- import '../macros/global.njk' as gm %}
+    <div class="site-container">
+      {%- filter indent(4, true) %}
+      {% block content %}{% endblock %}
+      {%- endfilter %}
+    </div>
+
+    {% include 'partials/footer.njk' %}
+
+    {% for jsAsset in nunjucksWebpackPlugin.js %}
+    <script src="{{ jsAsset }}"></script>
+    {%- endfor %}
+  </body>
+
+</html>

@@ -1,0 +1,38 @@
+footer {
+  @include per-size(('height', 'line-height'), 80, 80, 110, 110, 110, 'px');
+  @include per-size('margin-top', $md, $md, $lg, $lg, $lg);
+  background-color: $footer-color;
+  color: $bg;
+  text-align: center;
+
+  .email {
+    @include per-size(('margin-right'), 20, 20, 30, 30, 30, 'px');
+    @include per-size(
+      'font-size',
+      $font-xxs,
+      $font-xxs,
+      $font-xs,
+      $font-xs,
+      $font-xs
+    );
+
+    vertical-align: middle;
+  }
+
+  .octicon {
+    vertical-align: middle;
+    @include per-size('height', 50, 50, 70, 70, 70, 'px');
+    @include per-size(
+      ('margin-top', 'margin-bottom'),
+      10,
+      10,
+      15,
+      15,
+      15,
+      'px'
+    );
+    path {
+      fill: $bg;
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{% extends 'layouts/base.njk' %}
+
+{% block content %}
+{%- filter indent(2, true) %}
+{% include 'partials/header.njk' %}
+<main>
+  {% include 'partials/about-me.njk' %}
+  {% include 'partials/my-stack.njk' %}
+  {% include 'partials/side-projects.njk' %}
+</main>
+{%- endfilter -%}
+{%- endblock -%}

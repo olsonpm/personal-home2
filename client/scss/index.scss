@@ -1,0 +1,9 @@
+@import '~normalize-scss/sass/_normalize';
+@include normalize();
+
+@import 'variables';
+@import 'mixins';
+@import 'fonts';
+@import 'main';
+@import 'partials/*';
+@import 'pages/*';
