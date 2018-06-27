@@ -16,11 +16,11 @@ footer {
       $font-xs
     );
 
-    vertical-align: middle;
+    display: inline-block;
+    vertical-align: top;
   }
 
   .octicon {
-    vertical-align: middle;
     @include per-size('height', 50, 50, 70, 70, 70, 'px');
     @include per-size(
       ('margin-top', 'margin-bottom'),
@@ -31,6 +31,14 @@ footer {
       15,
       'px'
     );
+
+    display: inline-block;
+    vertical-align: middle;
+
+    // not sure why, but firefox is cutting off the left edge of the svg by a
+    //   pixel and this mends it
+    padding-left: 1px;
+
     path {
       fill: $bg;
     }
