@@ -36,13 +36,14 @@ usage() {
 }
 
 case "${command}" in
-  build-prod)
+  build-release)
+    NODE_ENV='production' build_client "$@"
     NODE_ENV='production' build_server "$@"
-    NODE_ENV='production' build_client "$@" ;;
+    cp package.json package-lock.json license.txt release ;;
 
-  build-dev)
-    NODE_ENV='development' build_server "$@"
-    NODE_ENV='development' build_client "$@" ;;
+  build-prod)
+    NODE_ENV='production' build_client "$@"
+    NODE_ENV='production' build_server "$@" ;;
 
   prod)
     NODE_ENV='production' node -r esm pseudo-prod-server.js ;;

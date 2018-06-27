@@ -2,6 +2,8 @@
 // Imports //
 //---------//
 
+import autoprefixer from 'autoprefixer'
+import postcssClean from 'postcss-clean'
 import CleanWebpackPlugin from 'clean-webpack-plugin'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import nodeSassGlobImporter from 'node-sass-glob-importer'
@@ -136,7 +138,16 @@ function getRules() {
           loader: 'css-loader',
           options: { sourceMap: true },
         },
-        //        'resolve-url-loader',
+        {
+          loader: 'postcss-loader',
+          options: {
+            plugins: [
+              autoprefixer({ browsers: ['last 2 versions'] }),
+              postcssClean(),
+            ],
+            sourceMap: true,
+          },
+        },
         {
           loader: 'sass-loader',
           options: {
