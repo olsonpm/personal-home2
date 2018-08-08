@@ -27,6 +27,7 @@ build_server() {
 }
 
 usage() {
+  echo '' >&2
   echo './run <command> [args]' >&2
   echo '' >&2
   echo 'commands' >&2

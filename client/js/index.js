@@ -13,6 +13,7 @@ import { locals } from '../scss/screen-size-breakpoints.scss'
 //   to declare image dependencies here
 //
 import '../images/profile.png'
+import '../images/for-linkedin.png'
 import '../images/favicon.16.png'
 import '../images/favicon.32.png'
 import '../images/favicon.png'
