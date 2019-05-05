@@ -3,6 +3,7 @@
 //---------//
 
 import $ from 'domtastic'
+import { differenceInYears } from 'date-fns'
 import smoothscroll from 'smoothscroll'
 import animate from 'velocity-animate'
 
@@ -26,7 +27,9 @@ import '../images/favicon.ico'
 
 const delay = 600,
   setOfAnimatingElements = new Set(),
-  { xsMax } = locals
+  { xsMax } = locals,
+  now = new Date(),
+  bday = new Date(1988, 2, 23)
 
 //
 //------//
@@ -35,11 +38,17 @@ const delay = 600,
 
 $('button.expander').on('click', expanderClicked)
 window.scrollTo = scrollTo
+setAge()
 
 //
 //-------------//
 // Helper Fxns //
 //-------------//
+
+function setAge() {
+  const currentAge = '' + differenceInYears(now, bday)
+  document.getElementById('age').textContent = currentAge
+}
 
 function scrollTo() {
   const link = $(this),
