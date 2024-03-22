@@ -2,16 +2,15 @@
 // Imports //
 //---------//
 
-import autoprefixer from 'autoprefixer'
-import postcssClean from 'postcss-clean'
-import CleanWebpackPlugin from 'clean-webpack-plugin'
-import MiniCssExtractPlugin from 'mini-css-extract-plugin'
-import nodeSassGlobImporter from 'node-sass-glob-importer'
-import nunjucks from 'nunjucks'
-import NunjucksWebpackPlugin from 'nunjucks-webpack-plugin'
-import path from 'path'
-import TerserPlugin from 'terser-webpack-plugin'
-import { myEmail } from '../app-config'
+const autoprefixer = require('autoprefixer')
+const postcssClean = require('postcss-clean')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const nunjucks = require('nunjucks')
+const NunjucksWebpackPlugin = require('nunjucks-webpack-plugin')
+const path = require('path')
+const TerserPlugin = require('terser-webpack-plugin')
+const { myEmail } = require('./app-config')
 
 //
 //------//
@@ -21,7 +20,7 @@ import { myEmail } from '../app-config'
 const { Environment, FileSystemLoader } = nunjucks
 
 const isDevelopment = process.env.NODE_ENV === 'development',
-  projectDirectory = path.resolve(__dirname, '..'),
+  projectDirectory = __dirname,
   viewsDir = path.resolve(projectDirectory, 'client/views'),
   env = new Environment(new FileSystemLoader(viewsDir, { noCache: true }), {
     autoescape: false,
@@ -44,7 +43,7 @@ const config = {
   entry: ['./client/js/index.js', './client/scss/index.scss'],
   devtool: isDevelopment ? 'cheap-module-eval-source-map' : 'source-map',
   output: {
-    path: path.join(projectDirectory, 'release/static'),
+    path: path.join(projectDirectory, 'static'),
     filename: '[name].[chunkhash].pack.js',
     pathinfo: isDevelopment,
   },
@@ -85,7 +84,7 @@ function getPlugins() {
 
   if (!isDevelopment) {
     plugins.push(
-      new CleanWebpackPlugin(['release']),
+      new CleanWebpackPlugin(['static']),
       new MiniCssExtractPlugin({
         filename: '[name].[hash].css',
       })
@@ -152,7 +151,6 @@ function getRules() {
           loader: 'sass-loader',
           options: {
             sourceMap: true,
-            importer: nodeSassGlobImporter(),
           },
         },
       ],
@@ -183,4 +181,4 @@ function getRules() {
 // Exports //
 //---------//
 
-export default config
+module.exports = config

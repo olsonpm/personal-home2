@@ -2,37 +2,28 @@
 // Imports //
 //---------//
 
-import Koa from 'koa'
-import koaCompress from 'koa-compress'
-import koaStatic from 'koa-static'
-import path from 'path'
+const Koa = require('koa')
+const koaCompress = require('koa-compress')
+const koaStatic = require('koa-static')
+const path = require('path')
+const { port } = require('./app-config')
 
 //
 //------//
 // Init //
 //------//
 
-const app = new Koa(),
-  releaseDir = __dirname
+const app = new Koa()
 
 //
 //------//
 // Main //
 //------//
 
-const getApp = maybeLetsEncryptDir => {
-  app.use(koaCompress()).use(koaStatic(path.resolve(releaseDir, 'static')))
-
-  if (maybeLetsEncryptDir) {
-    app.use(koaStatic(maybeLetsEncryptDir, { hidden: true }))
-  }
-
-  return app
-}
-
-//
-//---------//
-// Exports //
-//---------//
-
-export default { getApp }
+app
+  .use(koaCompress())
+  .use(koaStatic(path.resolve(__dirname, 'static')))
+  .listen(port, () => {
+    // eslint-disable-next-line no-console
+    console.log(`home website listening at ${port}`)
+  })

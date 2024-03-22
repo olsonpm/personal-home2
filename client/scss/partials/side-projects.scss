@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 #side-projects {
   h4 {
     margin-bottom: $xs;
@@ -45,8 +47,8 @@
         right: 0;
         width: 0;
         height: 0;
-        border-top: ($project-height / 2) solid transparent;
-        border-bottom: ($project-height / 2) solid transparent;
+        border-top: math.div($project-height, 2) solid transparent;
+        border-bottom: math.div($project-height, 2) solid transparent;
         border-right: $xxs solid $bg;
       }
     }
