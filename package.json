@@ -7,6 +7,7 @@
     "url": "git+https://github.com/olsonpm/personal-home2.git"
   },
   "scripts": {
+    "build-app": "npm run build-prod && rm -rf app && mkdir app && cp -r license.txt package*.json server.js static app",
     "build-dev": "NODE_ENV='development' webpack",
     "build-prod": "NODE_ENV='production' webpack",
     "run-dev": "NODE_ENV='development' webpack-dev-server"
@@ -36,7 +37,7 @@
     "sass-loader": "^7.0.3",
     "smoothscroll": "^0.4.0",
     "style-loader": "^0.21.0",
-    "terser-webpack-plugin": "github:olsonpm/terser-webpack-plugin#1.2.6",
+    "terser-webpack-plugin": "^4.2.3",
     "url-loader": "^1.0.1",
     "velocity-animate": "github:olsonpm/velocity#ee507394e2d5efe10d68cfd190aa1ccd5aff43a8",
     "webpack": "^4.12.2",

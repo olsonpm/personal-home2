@@ -6,13 +6,13 @@ const Koa = require('koa')
 const koaCompress = require('koa-compress')
 const koaStatic = require('koa-static')
 const path = require('path')
-const { port } = require('./app-config')
 
 //
 //------//
 // Init //
 //------//
 
+const port = 4663
 const app = new Koa()
 
 //
