@@ -3,7 +3,6 @@
 //---------//
 
 import $ from 'domtastic'
-import { differenceInYears } from 'date-fns'
 import smoothscroll from 'smoothscroll'
 import animate from 'velocity-animate'
 
@@ -38,17 +37,11 @@ const delay = 600,
 
 $('button.expander').on('click', expanderClicked)
 window.scrollTo = scrollTo
-setAge()
 
 //
 //-------------//
 // Helper Fxns //
 //-------------//
-
-function setAge() {
-  const currentAge = '' + differenceInYears(now, bday)
-  document.getElementById('age').textContent = currentAge
-}
 
 function scrollTo() {
   const link = $(this),
