@@ -1,0 +1,28 @@
+#page-user-interactions {
+  @include per-size('margin-top', $md, $md, $md, $lg, $xl);
+
+  h3 {
+    color: $accent;
+  }
+
+  h1 + p,
+  h3 {
+    @include per-size('margin-top', $sm, $sm, $md, $md, $md);
+  }
+
+  h3 + p,
+  p + p,
+  video {
+    margin-top: $xxs;
+  }
+
+  li + li {
+    > h3 {
+      @include per-size('margin-top', $sm, $sm, $md, $md, $md);
+    }
+  }
+
+  video {
+    width: 100%;
+  }
+}

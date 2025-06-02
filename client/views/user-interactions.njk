@@ -1,0 +1,40 @@
+{% extends 'layouts/base.njk' %}
+
+{% block content %}
+{%- filter indent(2, true) %}
+<main id="page-user-interactions">
+    <h1>User Interactions</h1>
+    <p>
+      The following are clips of custom user interactions I've built in my
+      personal&nbsp;projects.  All interfaces were built by me - the good and
+      the ugly :)
+    </p>
+
+    <ul role="list">
+      <li>
+        <h3>Common FP</h3>
+        <p>
+          This is a utility library I'm working on - allowing you to safely and
+          easily try it in-browser with modern tooling.
+        </p>
+        <p>
+          The website is built with <a target="_blank" href="https://nextjs.org/docs/pages/building-your-application/rendering/static-site-generation">Next.js using SSG</a>
+        </p>
+        <video id="cfp-interactions" src="videos/cfp-interactions.mp4" controls>
+      </li>
+      <li>
+        <h3>Pass The Quill</h3>
+        <p>
+          This is a word game I made a long time ago.  Below shows me playing
+          against myself to demonstrate the UX.
+        </p>
+        <p>
+          Credit to my friend <a target="_blank" href="https://www.linkedin.com/in/ryan-grebinski-77b2a46a/">Ryan Grebinski</a>
+          for the awesome logo.
+        </p>
+        <video id="ptq-interactions" src="videos/ptq-interactions.mp4" controls>
+      </li>
+    </ul>
+</main>
+{%- endfilter -%}
+{%- endblock -%}

@@ -10,7 +10,7 @@ import { locals } from '../scss/screen-size-breakpoints.scss'
 
 //
 // and because nunjucks-loader doesn't work in a node environment, it's easiest
-//   to declare image dependencies here
+//   to declare asset dependencies here
 //
 import '../images/profile.png'
 import '../images/for-linkedin.png'
@@ -18,6 +18,8 @@ import '../images/favicon.16.png'
 import '../images/favicon.32.png'
 import '../images/favicon.png'
 import '../images/favicon.ico'
+import '../videos/cfp-interactions.mp4'
+import '../videos/ptq-interactions.mp4'
 
 //
 //------//

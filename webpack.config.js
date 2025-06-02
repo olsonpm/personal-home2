@@ -78,6 +78,14 @@ function getPlugins() {
           to: 'index.html',
           context: { myEmail },
         },
+        {
+          from: path.resolve(
+            projectDirectory,
+            'client/views/user-interactions.njk'
+          ),
+          to: 'user-interactions',
+          context: { myEmail },
+        },
       ],
     }),
   ]
@@ -115,6 +123,14 @@ function getRules() {
       options: {
         name: '[name].[ext]',
         outputPath: 'images/',
+      },
+    },
+    {
+      test: /\.mp4$/,
+      loader: 'file-loader',
+      options: {
+        name: '[name].[ext]',
+        outputPath: 'videos/',
       },
     },
     {
