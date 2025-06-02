@@ -7,9 +7,16 @@
     <link rel="icon" type="image/png" href="/images/favicon.16.png" sizes="16x16">
     <link rel="icon" type="image/png" href="/images/favicon.32.png" sizes="32x32">
 
-    {% for cssAsset in nunjucksWebpackPlugin.css -%}
+    {% if isDevelopment -%}
+    {%- for cssAsset in nunjucksWebpackPlugin.css -%}
     <link rel="stylesheet" type="text/css" href="{{ cssAsset }}">
-    {%- endfor %}
+    {%- endfor -%}
+    {% else %}
+    <style>
+{{ nunjucksWebpackPlugin.cssInline }}
+    </style>
+    {% endif %}
+
   </head>
 
   <body>

@@ -1,16 +1,23 @@
 {
   "name": "personal-home2",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "just my personal home website yo",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/olsonpm/personal-home2.git"
   },
   "scripts": {
-    "build-app": "npm run build-prod && rm -rf app && mkdir app && cp -r license.txt package*.json server.js static app",
+    "build-app": "rm -rf app && mkdir app && cp -r license.txt package*.json server.js static app",
     "build-dev": "NODE_ENV='development' webpack",
     "build-prod": "NODE_ENV='production' webpack",
-    "run-dev": "NODE_ENV='development' webpack-dev-server"
+    "build-prod-app": "npm run build-prod && npm run build-app",
+    "build-dev-app": "npm run build-dev && npm run build-app",
+    "preview": "HOME_PREVIEW=true node app/server.js",
+    "run-dev": "NODE_ENV='development' webpack-dev-server",
+    "docker-build": "sh ./scripts/build.sh",
+    "docker-push": "sh ./scripts/push.sh",
+    "docker-build-and-push": "npm run docker-build && npm run docker-push",
+    "build-and-trust-local-dev-certs": "sh ./scripts/build-local-dev-certs.sh && sh ./scripts/trust-local-dev-certs.sh"
   },
   "author": "phil olson",
   "homepage": "https://github.com/olsonpm/personal-home2#readme",
@@ -28,7 +35,7 @@
     "mini-css-extract-plugin": "^0.4.0",
     "normalize-scss": "^8.0.0",
     "nunjucks": "^3.1.3",
-    "nunjucks-webpack-plugin": "github:olsonpm/nunjucks-webpack-plugin",
+    "nunjucks-webpack-plugin": "github:olsonpm/nunjucks-webpack-plugin#425e676764ae8f6fcb629283c3676f72dd5b3fee",
     "postcss-clean": "^1.1.0",
     "postcss-loader": "^2.1.5",
     "prettier": "^1.13.6",

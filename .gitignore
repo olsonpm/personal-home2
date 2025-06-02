@@ -1,5 +1,7 @@
+/scripts/.env
 /app/
 /node_modules/
 /test.js
 /static
 /app-config.js
+/local-dev-certs/

@@ -76,7 +76,7 @@ function getPlugins() {
         {
           from: path.resolve(projectDirectory, 'client/views/home.njk'),
           to: 'index.html',
-          context: { myEmail },
+          context: { isDevelopment, myEmail },
         },
         {
           from: path.resolve(
@@ -84,7 +84,7 @@ function getPlugins() {
             'client/views/user-interactions.njk'
           ),
           to: 'user-interactions',
-          context: { myEmail },
+          context: { isDevelopment, myEmail },
         },
       ],
     }),
