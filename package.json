@@ -14,8 +14,8 @@
     "build-dev-app": "npm run build-dev && npm run build-app",
     "preview": "HOME_PREVIEW=true node app/server.js",
     "dev": "sh ./scripts/run-webpack-dev-server.sh",
-    "docker-build": "sh ./scripts/build.sh",
-    "docker-push": "sh ./scripts/push.sh",
+    "docker-build": "npm run build-prod-app && sh ./scripts/docker-build.sh",
+    "docker-push": "sh ./scripts/docker-push.sh",
     "docker-build-and-push": "npm run docker-build && npm run docker-push",
     "build-and-trust-local-dev-certs": "sh ./scripts/build-local-dev-certs.sh && sh ./scripts/trust-local-dev-certs.sh"
   },
