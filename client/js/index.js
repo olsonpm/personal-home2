@@ -3,7 +3,6 @@
 //---------//
 
 import $ from 'domtastic'
-import smoothscroll from 'smoothscroll'
 import animate from 'velocity-animate'
 
 import { locals } from '../scss/screen-size-breakpoints.scss'
@@ -18,8 +17,9 @@ import '../images/favicon.16.png'
 import '../images/favicon.32.png'
 import '../images/favicon.png'
 import '../images/favicon.ico'
-import '../videos/cfp-interactions.mp4'
-import '../videos/ptq-interactions.mp4'
+import '../videos/cfp-ux.mp4'
+import '../videos/ptq-ux.mp4'
+import '../videos/cbg-ux.mp4'
 
 //
 //------//
@@ -38,27 +38,11 @@ const delay = 600,
 //------//
 
 $('button.expander').on('click', expanderClicked)
-window.scrollTo = scrollTo
 
 //
 //-------------//
 // Helper Fxns //
 //-------------//
-
-function scrollTo() {
-  const link = $(this),
-    id = link.attr('href').slice(1),
-    scrollToEl = document.getElementById(id),
-    y = scrollToEl.getBoundingClientRect().top
-
-  smoothscroll(scrollToEl, calculateDuration(y))
-
-  return false
-}
-
-function calculateDuration(y) {
-  return (y - scrollY) / 600
-}
 
 function expanderClicked() {
   if (setOfAnimatingElements.has(this)) return
@@ -66,10 +50,6 @@ function expanderClicked() {
   setOfAnimatingElements.add(this, true)
 
   const button = $(this)
-
-  if (isExtraSmallScreen() && !button.hasClass('expanded')) {
-    smoothscroll(this, delay)
-  }
 
   return Promise.all([rotateButton(button), toggleContentState(button)]).then(
     () => {

@@ -79,11 +79,8 @@ function getPlugins() {
           context: { isDevelopment, myEmail },
         },
         {
-          from: path.resolve(
-            projectDirectory,
-            'client/views/user-interactions.njk'
-          ),
-          to: 'user-interactions',
+          from: path.resolve(projectDirectory, 'client/views/ux-clips.njk'),
+          to: isDevelopment ? 'ux-clips' : 'ux-clips.html',
           context: { isDevelopment, myEmail },
         },
       ],

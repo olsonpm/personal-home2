@@ -19,27 +19,13 @@ header {
     @include per-size('margin-bottom', $sm, $sm, $md, $md, $md);
     font-style: italic;
 
-    @include per-size('font-size', $font-xxs, $font-xs, $font-base, $font-base, $font-base);
-  }
-
-  nav {
-    @include per-size('font-size', $font-lg, $font-lg, $font-xl, $font-xl, $font-xl);
-    font-family: ScopeOne, serif;
-
-    @media (max-width: $screen-sm-max) {
-      li + li {
-        margin-top: $xs;
-      }
-    }
-
-    @media (min-width: $screen-md-min) {
-      li {
-        display: inline-block;
-      }
-      li + li:before {
-        content: "/";
-        @include per-size(('margin-left', 'margin-right'), $xxs, $xs, $xs, $sm, $sm);
-      }
-    }
+    @include per-size(
+      'font-size',
+      $font-xxs,
+      $font-xs,
+      $font-base,
+      $font-base,
+      $font-base
+    );
   }
 }

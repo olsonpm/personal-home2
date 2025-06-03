@@ -1,0 +1,62 @@
+{% extends 'layouts/base.njk' %}
+
+{% block content %}
+{%- filter indent(2, true) %}
+<main id="page-ux-clips">
+  <h1>UX Clips</h1>
+  <p>
+    The following are clips of user experiences I've built in my personal
+    projects.  Most designs are my own - the good and the ugly :)
+  </p>
+
+  <nav class="main-nav">
+    <ol>
+      <li><a href="#common-fp">Common FP</a></li><!--
+      --><li><a href="#pass-the-quill">Pass The Quill</a></li><!--
+      --><li><a href="#condo-budget-graphs">Condo Budget Graphs</a></li>
+    </ol>
+  </nav>
+
+  <section id="common-fp">
+    <h3>Common FP</h3>
+    <p>
+      This is a utility library I'm working on - allowing you to safely and
+      quickly try it in-browser with modern&nbsp;tooling.
+    </p>
+    <p>
+      The website is built with <a target="_blank" href="https://nextjs.org/docs/pages/building-your-application/rendering/static-site-generation">Next.js using SSG</a>.
+      Components and design are my&nbsp;own.
+    </p>
+    <video id="cfp-ux" src="videos/cfp-ux.mp4" controls>
+  </section>
+  <section id="pass-the-quill">
+    <h3>Pass The Quill</h3>
+    <p>
+      This is a word game I made a long time ago.  Below shows me playing
+      against myself to demonstrate the UX.  I'm proud of this because it
+      feels like a native&nbsp;app.
+    </p>
+    <p>
+      Credit to my friend <a target="_blank" href="https://www.linkedin.com/in/ryan-grebinski-77b2a46a/">Ryan Grebinski</a>
+      for the awesome&nbsp;logo.  Outside of the logo, components and design are
+      my&nbsp;own using Vue with SSR.
+    </p>
+    <video id="ptq-ux" src="videos/ptq-ux.mp4" controls>
+  </section>
+  <section id="condo-budget-graphs">
+    <h3>Condo Budget Graphs</h3>
+    <p>
+      I'm the treasurer at the condo I live at.  Although the clip is demo
+      data, the real one requires authentication and is built off our budget
+      spreadsheets.  It helps me convey our budget to&nbsp;residents.
+    </p>
+    <p>
+      The interface here isn't custom - it was built off Material UI.  The
+      graph is built with&nbsp;<a target="_blank" href="https://nivo.rocks/line/">@nivo/line</a>,
+      and the project is developed using <a target="_blank" href="https://vite.dev/">vite</a>.
+    </p>
+    <video id="cbg-ux" src="videos/cbg-ux.mp4" controls>
+  </section>
+</main>
+{%- endfilter -%}
+{%- endblock -%}

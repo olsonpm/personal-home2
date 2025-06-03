@@ -1,4 +1,4 @@
-#page-user-interactions {
+#page-ux-clips {
   @include per-size('margin-top', $md, $md, $md, $lg, $xl);
 
   h3 {
@@ -24,5 +24,9 @@
 
   video {
     width: 100%;
+  }
+
+  .main-nav {
+    @include per-size('margin-top', $sm, $sm, $md, $md, $md);
   }
 }

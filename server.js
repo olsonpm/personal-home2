@@ -32,7 +32,7 @@ if (process.env.HOME_PREVIEW) {
 app
   .use(koaCompress())
   .use(setUserInteractionsMimeType)
-  .use(koaStatic(path.resolve(__dirname, 'static')))
+  .use(koaStatic(path.resolve(__dirname, 'static'), { extensions: ['html'] }))
 
 const { createServer } = process.env.HOME_PREVIEW ? https : http
 
@@ -40,16 +40,3 @@ createServer(serverOpts, app.callback()).listen(port, () => {
   const protocol = process.env.HOME_PREVIEW ? 'https' : 'http'
   console.log(`home website listening at ${protocol}://localhost:${port}`)
 })
-
-//
-//------------------//
-// Helper Functions //
-//------------------//
-
-function setUserInteractionsMimeType(ctx, next) {
-  if (ctx.path === '/user-interactions') {
-    ctx.type = 'text/html'
-  }
-
-  return next()
-}

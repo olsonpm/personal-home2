@@ -4,6 +4,7 @@ body {
   color: $fg;
   font-family: 'Open Sans', sans-serif;
   font-size: $font-base;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -121,10 +122,14 @@ ol:not(.normal-list) {
 }
 
 main > section {
+  scroll-margin-top: 16px;
+
   @include per-size('margin-top', $md, $md, $lg, $lg, $lg);
 
   h3 {
     color: $accent;
+    margin-bottom: $xs;
+
     @include per-size(
       'font-size',
       $font-lg,
@@ -133,7 +138,6 @@ main > section {
       $font-xl,
       $font-xl
     );
-    margin-bottom: $xs;
   }
 
   h4 {
