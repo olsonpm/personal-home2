@@ -3,7 +3,8 @@
 //---------//
 
 const fs = require('fs')
-const http2 = require('http2')
+const http = require('http')
+const https = require('https')
 const Koa = require('koa')
 const koaCompress = require('koa-compress')
 const koaStatic = require('koa-static')
@@ -16,12 +17,11 @@ const path = require('path')
 
 const port = 4663
 const app = new Koa()
-
-let key, cert
+const serverOpts = {}
 
 if (process.env.HOME_PREVIEW) {
-  key = fs.readFileSync('./local-dev-certs/key.pem')
-  cert = fs.readFileSync('./local-dev-certs/cert.pem')
+  serverOpts.key = fs.readFileSync('./local-dev-certs/key.pem')
+  serverOpts.cert = fs.readFileSync('./local-dev-certs/cert.pem')
 }
 
 //
@@ -34,11 +34,9 @@ app
   .use(setUserInteractionsMimeType)
   .use(koaStatic(path.resolve(__dirname, 'static')))
 
-const createServer = process.env.HOME_PREVIEW
-  ? http2.createSecureServer
-  : http2.createServer
+const { createServer } = process.env.HOME_PREVIEW ? https : http
 
-createServer({ key, cert }, app.callback()).listen(port, () => {
+createServer(serverOpts, app.callback()).listen(port, () => {
   const protocol = process.env.HOME_PREVIEW ? 'https' : 'http'
   console.log(`home website listening at ${protocol}://localhost:${port}`)
 })

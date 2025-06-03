@@ -7,13 +7,13 @@
     "url": "git+https://github.com/olsonpm/personal-home2.git"
   },
   "scripts": {
-    "build-app": "rm -rf app && mkdir app && cp -r license.txt package*.json server.js static app",
+    "build-app": "rm -rf app && mkdir app && cp -r license.txt pnpm*.yaml package.json server.js static app",
     "build-dev": "NODE_ENV='development' webpack",
     "build-prod": "NODE_ENV='production' webpack",
     "build-prod-app": "npm run build-prod && npm run build-app",
     "build-dev-app": "npm run build-dev && npm run build-app",
     "preview": "HOME_PREVIEW=true node app/server.js",
-    "run-dev": "NODE_ENV='development' webpack-dev-server",
+    "dev": "sh ./scripts/run-webpack-dev-server.sh",
     "docker-build": "sh ./scripts/build.sh",
     "docker-push": "sh ./scripts/push.sh",
     "docker-build-and-push": "npm run docker-build && npm run docker-push",
@@ -63,5 +63,6 @@
     "trailingComma": "es5",
     "semi": false
   },
-  "license": "SEE LICENSE IN license.txt"
+  "license": "SEE LICENSE IN license.txt",
+  "packageManager": "pnpm@10.11.1+sha512.e519b9f7639869dc8d5c3c5dfef73b3f091094b0a006d7317353c72b124e80e1afd429732e28705ad6bfa1ee879c1fce46c128ccebd3192101f43dd67c667912"
 }

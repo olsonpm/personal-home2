@@ -4,6 +4,11 @@ COPY app /opt/app/
 
 WORKDIR /opt/app/
 
-RUN npm ci --omit dev
+RUN corepack enable pnpm \
+  && corepack prepare pnpm@10.11.1 --activate \
+  && pnpm config set store-dir /root/pnpm-store \
+  && corepack use pnpm@10.11.1
 
-CMD node server.js
+CMD pnpm -v \
+  && pnpm install --prod --frozen-lockfile \
+  && node server.js
