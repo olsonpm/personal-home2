@@ -31,7 +31,6 @@ if (process.env.HOME_PREVIEW) {
 
 app
   .use(koaCompress())
-  .use(setUserInteractionsMimeType)
   .use(koaStatic(path.resolve(__dirname, 'static'), { extensions: ['html'] }))
 
 const { createServer } = process.env.HOME_PREVIEW ? https : http
