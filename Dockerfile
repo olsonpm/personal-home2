@@ -6,8 +6,7 @@ WORKDIR /opt/app/
 
 RUN corepack enable pnpm \
   && corepack prepare pnpm@10.11.1 --activate \
-  && pnpm config set store-dir /root/pnpm-store \
-  && corepack use pnpm@10.11.1
+  && pnpm config set store-dir /root/pnpm-store
 
 CMD pnpm -v \
   && pnpm install --prod --frozen-lockfile \
