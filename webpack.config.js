@@ -76,12 +76,12 @@ function getPlugins() {
         {
           from: path.resolve(projectDirectory, 'client/views/home.njk'),
           to: 'index.html',
-          context: { isDevelopment, myEmail },
+          context: { isDevelopment, myEmail, page: 'home' },
         },
         {
           from: path.resolve(projectDirectory, 'client/views/ux-clips.njk'),
           to: isDevelopment ? 'ux-clips' : 'ux-clips.html',
-          context: { isDevelopment, myEmail },
+          context: { isDevelopment, myEmail, page: 'ux-clips' },
         },
       ],
     }),
