@@ -4,7 +4,7 @@
     <title>Phil Olson</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta property="og:image" content="/images/for-linkedin.png"/>
-    <meta name="description" content="Phil Olson's informal supplement to his resume that emphasizes personal projects." />
+    <meta name="description" content="An informal supplement to my resume that emphasizes personal projects." />
 
     <link rel="icon" type="image/png" href="/images/favicon.16.png" sizes="16x16">
     <link rel="icon" type="image/png" href="/images/favicon.32.png" sizes="32x32">
@@ -13,8 +13,8 @@
     <meta name="robots" content="noindex">
     {%- endif -%}
 
-    {%- for fontAsset in nunjucksWebpackPlugin.fonts -%}
-    <link rel="preload" href="{{ fontAsset }}" as="font" type="font/woff2">
+    {%- for fontAsset in nunjucksWebpackPlugin.fonts %}
+    <link rel="preload" href="{{ fontAsset }}" as="font" type="font/woff2" crossorigin>
     {%- endfor -%}
 
     {% if isDevelopment -%}
@@ -26,7 +26,6 @@
 {{ nunjucksWebpackPlugin.cssInline }}
     </style>
     {% endif %}
-
   </head>
 
   <body>
