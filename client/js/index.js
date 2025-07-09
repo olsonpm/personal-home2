@@ -11,6 +11,7 @@ import { locals } from '../scss/screen-size-breakpoints.scss'
 // and because nunjucks-loader doesn't work in a node environment, it's easiest
 //   to declare asset dependencies here
 //
+import '../images/profile.avif'
 import '../images/profile.png'
 import '../images/for-linkedin.png'
 import '../images/favicon.16.png'

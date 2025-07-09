@@ -1,7 +1,7 @@
 @use 'sass:math';
 
 #side-projects {
-  h4 {
+  h3 {
     margin-bottom: $xs;
   }
 
@@ -10,7 +10,7 @@
   }
 
   > ul:not(.legend) > li + li {
-    margin-top: $sm;
+    margin-top: $xs;
   }
 
   .application,
@@ -108,9 +108,10 @@
       &:first-child {
         margin-top: $xs;
       }
-      &:not(:first-child) {
-        margin-top: $xxs;
-      }
+    }
+    > a + p.note,
+    > a:not(:first-child) {
+      margin-top: $xxs;
     }
   }
 

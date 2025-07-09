@@ -1,7 +1,7 @@
 <section id="side-projects">
-  <h3>Side Projects</h3>
+  <h2>Side Projects</h2>
   <p>The following are personal projects I've worked on in my own time</p>
-  <h4>Legend</h4>
+  <h3>Legend</h3>
   <ul class="legend">
     <li>
       <h4 class="application">application</h4>
@@ -27,8 +27,41 @@
   {# End of variable declarations #}
   {#------------------------------#}
 
-  <h4>Projects</h4>
+  <h3>Projects</h3>
   <ul>
+    <li id="common-fp">
+      <h4 class="library">
+        Common FP
+      </h4>
+      {{ gm.expander() }}
+
+      <div class="content">
+        {{ gm.link('View a UX clip', '/ux-clips#common-fp') }}
+        <p class="note">Source code not public yet</p>
+
+        {{ what_is_it }}
+        <p>
+          A functional utility library I'm working on - emphasizing developer
+          experience and generic data structure support.
+        </p>
+
+        {{ why }}
+        <p>
+          I enjoy functional programming and feel there's an opportunity for an
+          intuitive and modern utility library.  Common FP attempts to reach a
+          wider audience by limiting jargon, sticking to intuitive concepts, and
+          providing a modern in-browser code editor allowing you to quickly try
+          it out. It also approaches data structure support in a generic
+          fashion.  For instance, a utility "mapValues" maps over values of
+          objects, arrays, Maps and Sets.
+        </p>
+        <p>
+          There are other features unique to Common FP, but I'll leave it
+          at that.
+        </p>
+      </div>
+    </li>
+
     <li id="passthequill">
       <h4 class="application">
         passthequill.com

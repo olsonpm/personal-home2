@@ -2,7 +2,9 @@ header {
   @include per-size('margin-top', $sm, $sm, $md, $lg, $xl);
   text-align: center;
 
-  h1 {
+  .hello {
+    font-family: ScopeOne, serif;
+    font-size: $font-h1;
     margin-bottom: $xs;
   }
 
@@ -11,13 +13,13 @@ header {
     margin-bottom: $xs;
   }
 
-  h3 {
+  h1 {
     @include per-size('margin-bottom', $sm, $sm, $md, $md, $md);
+    font-size: $font-lg;
   }
 
-  p {
+  p.note {
     @include per-size('margin-bottom', $sm, $sm, $md, $md, $md);
-    font-style: italic;
 
     @include per-size(
       'font-size',

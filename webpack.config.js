@@ -19,15 +19,16 @@ const { myEmail } = require('./app-config')
 
 const { Environment, FileSystemLoader } = nunjucks
 
-const isDevelopment = process.env.NODE_ENV === 'development',
-  projectDirectory = __dirname,
-  viewsDir = path.resolve(projectDirectory, 'client/views'),
-  env = new Environment(new FileSystemLoader(viewsDir, { noCache: true }), {
-    autoescape: false,
-    throwOnUndefined: true,
-  }),
-  rootFaviconRe = /favicon\.(ico|png)$/,
-  screenSizeBreakpointsRe = /screen-size-breakpoints\.scss$/
+const projectDirectory = __dirname
+const fromRoot = fpath => path.resolve(projectDirectory, fpath)
+const isDevelopment = process.env.NODE_ENV === 'development'
+const viewsDir = fromRoot('client/views')
+const env = new Environment(new FileSystemLoader(viewsDir, { noCache: true }), {
+  autoescape: false,
+  throwOnUndefined: true,
+})
+const rootFaviconRe = /favicon\.(ico|png)$/
+const screenSizeBreakpointsRe = /screen-size-breakpoints\.scss$/
 
 //
 //------//
@@ -38,7 +39,13 @@ const config = {
   mode: isDevelopment ? 'development' : 'production',
   context: projectDirectory,
   devServer: {
-    port: 9090,
+    http2: true,
+    https: {
+      key: fromRoot('local-dev-certs/key.pem'),
+      cert: fromRoot('local-dev-certs/cert.pem'),
+    },
+    liveReload: true,
+    port: 4663,
   },
   entry: ['./client/js/index.js', './client/scss/index.scss'],
   devtool: isDevelopment ? 'cheap-module-eval-source-map' : 'source-map',
@@ -74,14 +81,16 @@ function getPlugins() {
       configure: env,
       templates: [
         {
-          from: path.resolve(projectDirectory, 'client/views/home.njk'),
+          from: fromRoot('client/views/home.njk'),
           to: 'index.html',
           context: { isDevelopment, myEmail, page: 'home' },
+          writeToFileEmit: true,
         },
         {
-          from: path.resolve(projectDirectory, 'client/views/ux-clips.njk'),
+          from: fromRoot('client/views/ux-clips.njk'),
           to: isDevelopment ? 'ux-clips' : 'ux-clips.html',
           context: { isDevelopment, myEmail, page: 'ux-clips' },
+          writeToFileEmit: true,
         },
       ],
     }),
@@ -114,7 +123,7 @@ function getRules() {
       },
     },
     {
-      test: /\.png$/,
+      test: /\.(avif|png)$/,
       exclude: rootFaviconRe,
       loader: 'file-loader',
       options: {

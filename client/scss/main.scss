@@ -2,6 +2,7 @@ html,
 body {
   background: $bg;
   color: $fg;
+  font-display: swap;
   font-family: 'Open Sans', sans-serif;
   font-size: $font-base;
   scroll-behavior: smooth;
@@ -74,14 +75,12 @@ h1 {
   font-size: $font-h1;
 }
 h2 {
-  font-size: $font-xl;
-}
-h3 {
   font-size: $font-lg;
 }
-h4 {
+h3 {
   font-size: $font-md;
 }
+h4,
 h5 {
   font-size: $font-sm;
   margin-bottom: $xxs;
@@ -126,7 +125,7 @@ main > section {
 
   @include per-size('margin-top', $md, $md, $lg, $lg, $lg);
 
-  h3 {
+  h2 {
     color: $accent;
     margin-bottom: $xs;
 
@@ -140,10 +139,19 @@ main > section {
     );
   }
 
-  h4 {
+  h3 {
+    margin-bottom: $xxs;
     margin-top: $sm;
+
+    &:before {
+      content: ' - ';
+    }
+  }
+  h4 {
+    margin-bottom: $xxs;
   }
   h5 {
+    margin-bottom: $xxs;
     margin-top: $xs;
   }
   p + p {
@@ -151,14 +159,6 @@ main > section {
   }
   p + ul {
     margin-top: $xs;
-  }
-
-  h4 {
-    margin-bottom: $xxs;
-
-    &:before {
-      content: ' - ';
-    }
   }
 }
 
