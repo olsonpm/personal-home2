@@ -29,9 +29,14 @@ if (process.env.HOME_PREVIEW) {
 // Main //
 //------//
 
-app
-  .use(koaCompress())
-  .use(koaStatic(path.resolve(__dirname, 'static'), { extensions: ['html'] }))
+const twoDaysInSeconds = 172800
+
+app.use(koaCompress()).use(
+  koaStatic(path.resolve(__dirname, 'static'), {
+    extensions: ['html'],
+    maxage: twoDaysInSeconds,
+  })
+)
 
 const { createServer } = process.env.HOME_PREVIEW ? https : http
 
