@@ -13,6 +13,10 @@
     <meta name="robots" content="noindex">
     {%- endif -%}
 
+    {%- for fontAsset in nunjucksWebpackPlugin.fonts -%}
+    <link rel="preload" href="{{ fontAsset }}" as="font" type="font/woff2">
+    {%- endfor -%}
+
     {% if isDevelopment -%}
     {%- for cssAsset in nunjucksWebpackPlugin.css -%}
     <link rel="stylesheet" type="text/css" href="{{ cssAsset }}">

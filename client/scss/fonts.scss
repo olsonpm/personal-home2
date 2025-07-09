@@ -1,16 +1,19 @@
-@font-face{
-	font-family: ScopeOne;
-	font-weight: 400;
-	src: url(../fonts/scope-one.regular.woff) format("woff");
+@font-face {
+  font-display: swap;
+  font-family: ScopeOne;
+  font-weight: 400;
+  src: url(../fonts/scope-one.regular.woff2) format('woff2');
 }
-@font-face{
-	font-family: 'Open Sans';
-	font-weight: 400;
-	src: url(../fonts/open-sans.regular.woff) format("woff");
+@font-face {
+  font-display: swap;
+  font-family: 'Open Sans';
+  font-weight: 400;
+  src: url(../fonts/open-sans.regular.woff2) format('woff2');
 }
-@font-face{
-	font-family: 'Open Sans';
-	font-weight: 400;
+@font-face {
+  font-display: swap;
+  font-family: 'Open Sans';
+  font-weight: 400;
   font-style: italic;
-	src: url(../fonts/open-sans.italic.woff) format("woff");
+  src: url(../fonts/open-sans.italic.woff2) format('woff2');
 }

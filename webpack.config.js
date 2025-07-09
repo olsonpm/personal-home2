@@ -140,7 +140,7 @@ function getRules() {
       },
     },
     {
-      test: /\.woff$/,
+      test: /\.woff2$/,
       loader: 'url-loader',
       options: {
         limit: 8192,
