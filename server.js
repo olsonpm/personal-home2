@@ -29,12 +29,13 @@ if (process.env.HOME_PREVIEW) {
 // Main //
 //------//
 
-const twoDaysInMs = '172800000'
+const thirtyDaysInMs = 1000 * 60 * 60 * 24 * 30
+//                     1000ms 60s  60m  24h  30d
 
 app.use(koaCompress()).use(
   koaStatic(path.resolve(__dirname, 'static'), {
     extensions: ['html'],
-    maxage: twoDaysInMs,
+    maxage: thirtyDaysInMs,
   })
 )
 
