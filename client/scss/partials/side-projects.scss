@@ -16,14 +16,17 @@
   .application,
   .tool,
   .library {
-    vertical-align: top;
-    margin-top: 0;
-    margin-bottom: 0;
     border-left-style: solid;
-    padding-top: $xxs;
-    padding-bottom: $xxs;
     display: inline-block;
+    margin-bottom: 0;
+    margin-top: 0;
+    padding-bottom: $xxs;
     position: relative;
+    vertical-align: top;
+
+    // 1px for visual vertical centering
+    padding-top: calc($xxs + 1px);
+
     @include per-size('padding-left', $xxs, $md, $md, $lg, $lg);
     @include per-size(
       'padding-right',
